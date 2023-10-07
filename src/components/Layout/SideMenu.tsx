@@ -2,15 +2,22 @@ import TalentLayerContext from '../../context/talentLayer';
 import SideLink from './SideLink';
 import { navigation, navigationAdmin } from './navigation';
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 function SideMenu() {
   const { user } = useContext(TalentLayerContext);
+  const router = useRouter();
 
   return (
     <nav className='space-y-1 px-3'>
       {navigation.map(item => (
         <SideLink key={item.name} href={item.href}>
-          <item.icon className='mr-3 h-5 w-5 flex-shrink-0 text-white' aria-hidden='true' />
+          <item.icon
+            className={`mr-3 h-5 w-5 flex-shrink-0 text-black \
+              ${router.asPath.endsWith(item.href)
+                ? 'bg-[#FFAE00] text-black'
+                : 'text-white'}`}
+            aria-hidden='true' />
           {item.name}
         </SideLink>
       ))}

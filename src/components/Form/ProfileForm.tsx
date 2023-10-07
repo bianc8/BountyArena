@@ -184,34 +184,6 @@ function ProfileForm({ callback }: { callback?: () => void }) {
                 className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                 placeholder=''
               />
-              <div className='border-gray-700 bg-gray-800 relative w-full border transition-all duration-300 rounded-xl p-4'>
-                <div className='flex w-full items-center gap-3'>
-                  <QuestionMarkCircle className='hidden' />
-                  <div>
-                    <h2 className='font-heading text-xs font-bold text-white mb-1'>
-                      <span>Need help?</span>
-                    </h2>
-                    <p className='font-alt text-xs font-normal'>
-                      <span className='text-gray-400'>Use our AI to generate a cool one</span>
-                    </p>
-                  </div>
-                  <div className='ms-auto'>
-                    <button
-                      disabled={aiLoading}
-                      onClick={e =>
-                        generatePictureUrl(e, newUrl => setFieldValue('image_url', newUrl))
-                      }
-                      className='border text-white bg-[#FFAE00] hover:bg-[#FF5500] border-gray-600 rounded-md h-10 w-10 p-2 relative inline-flex items-center justify-center space-x-1 font-sans text-sm font-normal leading-5 no-underline outline-none transition-all duration-300'>
-                      {aiLoading ? <Loading /> : 'GO'}
-                    </button>
-                  </div>
-                </div>
-                {values.image_url && (
-                  <div className='flex items-center justify-center py-3'>
-                    <img width='300' height='300' src={values.image_url} alt='' />
-                  </div>
-                )}
-              </div>
             </label>
 
             <label className='block'>

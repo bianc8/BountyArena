@@ -36,7 +36,7 @@ function MessagingIndex() {
         <div className='flex items-center justify-center pt-16'>
           <button
             type='submit'
-            className='bg-[#FFAE00] text-white font-bold py-2 px-4 rounded'
+            className='bg-[#FFAE00] text-black font-bold py-2 px-4 rounded'
             onClick={() => handleXmtpConnect()}>
             Connect to Messaging
           </button>

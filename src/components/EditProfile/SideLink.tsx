@@ -14,10 +14,10 @@ function SideLink({
   const isDashboard = href == '/dashboard/profile/edit';
   let className = isDashboard
     ? router.asPath === href
-      ? 'text-primary-500 bg-[#FFAE00]'
+      ? 'text-black bg-[#FFAE00]'
       : ''
     : router.asPath.includes(href)
-    ? 'text-primary-500 bg-[#FFAE00]'
+    ? 'text-black bg-[#FFAE00]'
     : '';
 
   className +=
