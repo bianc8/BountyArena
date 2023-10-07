@@ -1,8 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { QuestionMarkCircle } from 'heroicons-react';
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
-import { formatEther, formatUnits } from 'viem';
+import { useContext } from 'react';
+import { formatUnits } from 'viem';
 import { useAccount, usePublicClient, useWalletClient } from 'wagmi';
 import * as Yup from 'yup';
 import TalentLayerContext from '../../context/talentLayer';
@@ -10,7 +9,6 @@ import ServiceRegistry from '../../contracts/ABI/TalentLayerService.json';
 import useAllowedTokens from '../../hooks/useAllowedTokens';
 import { useChainId } from '../../hooks/useChainId';
 import { useConfig } from '../../hooks/useConfig';
-import { postOpenAiRequest } from '../../modules/OpenAi/utils';
 import Web3MailContext from '../../modules/Web3mail/context/web3mail';
 import { createWeb3mailToast } from '../../modules/Web3mail/utils/toast';
 import { IProposal, IService, IUser } from '../../types';
@@ -18,7 +16,6 @@ import { parseRateAmount } from '../../utils/currency';
 import { postToIPFS } from '../../utils/ipfs';
 import { getProposalSignature } from '../../utils/signature';
 import { createMultiStepsTransactionToast, showErrorTransactionToast } from '../../utils/toast';
-import Loading from '../Loading';
 import ServiceItem from '../ServiceItem';
 import { delegateCreateOrUpdateProposal } from '../request';
 import SubmitButton from './SubmitButton';
@@ -58,7 +55,6 @@ function ApplicationForm({
   const allowedTokenList = useAllowedTokens();
   const { isActiveDelegate } = useContext(TalentLayerContext);
   const { platformHasAccess } = useContext(Web3MailContext);
-  const [aiLoading, setAiLoading] = useState(false);
 
   const currentChain = chains.find(chain => chain.id === chainId);
   const platform = usePlatform(process.env.NEXT_PUBLIC_PLATFORM_ID as string);
@@ -95,25 +91,6 @@ function ApplicationForm({
     video_url: existingProposal?.description?.video_url || '',
   };
 
-  // const askAI = async (input: string, setFieldValue: any) => {
-  //   setAiLoading(true);
-  //   const context = 'I am a freelance and I need help to generate a proposal for a bounty.';
-  //   const serviceContext = `The is the job title:${service?.description?.title}.`;
-  //   const serviceBuyerContext = `This is the client name:${service.buyer.handle}.`;
-  //   const userContext = `My name is:${user.handle}. And this is a bit more about me: ${user?.description?.about}.`;
-  //   const proposalContext = `And this is some information about the proposal I want to makde: ${input}.`;
-  //   const agregatedContext =
-  //     context + serviceContext + serviceBuyerContext + userContext + proposalContext;
-  //   try {
-  //     const responseText = await postOpenAiRequest(agregatedContext);
-  //     setFieldValue('about', responseText);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setAiLoading(false);
-  //   }
-  // };
-
   const onSubmit = async (
     values: IFormValues,
     {
@@ -121,6 +98,7 @@ function ApplicationForm({
       resetForm,
     }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void },
   ) => {
+    console.log("ONSUBMIT")
     const token = allowedTokenList.find(token => token.address === values.rateToken);
     if (publicClient && token && walletClient) {
       try {
@@ -218,7 +196,7 @@ function ApplicationForm({
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-      {({ isSubmitting, values, setFieldValue }) => (
+      {({ isSubmitting }) => (
         <Form>
           <h2 className='mb-2 text-white font-bold'>For the bounty:</h2>
           <ServiceItem service={service} />
@@ -229,9 +207,9 @@ function ApplicationForm({
               <span className='text-gray-100'>Description</span>
               <Field
                 as='textarea'
-                id='description'
+                id='about'
                 rows={8}
-                name='description'
+                name='about'
                 className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                 placeholder=''
               />
