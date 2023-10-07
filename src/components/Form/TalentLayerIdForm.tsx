@@ -126,7 +126,7 @@ function TalentLayerIdForm() {
                     </h3>
                     <p>
                       AnonID is a work identity that allows ownership and growth of reputation
-                      across many gig marketplaces. Anon IDs are ERC-721 NFTs that live inside
+                      across many bounty marketplaces. Anon IDs are ERC-721 NFTs that live inside
                       crypto wallets; this means that reputation is self-custodied by the wallet
                       owner and lives separately from integrated platforms.
                     </p>

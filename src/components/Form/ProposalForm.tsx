@@ -97,7 +97,7 @@ function ProposalForm({
 
   const askAI = async (input: string, setFieldValue: any) => {
     setAiLoading(true);
-    const context = 'I am a freelance and I need help to generate a proposal for a gig.';
+    const context = 'I am a freelance and I need help to generate a proposal for a bounty.';
     const serviceContext = `The is the job title:${service?.description?.title}.`;
     const serviceBuyerContext = `This is the client name:${service.buyer.handle}.`;
     const userContext = `My name is:${user.handle}. And this is a bit more about me: ${user?.description?.about}.`;
@@ -320,7 +320,7 @@ function ProposalForm({
                 id='video_url'
                 name='video_url'
                 className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
-                placeholder='Enter  video URL'
+                placeholder='Enter video URL'
               />
               <span className='text-red-500'>
                 <ErrorMessage name='video_url' />

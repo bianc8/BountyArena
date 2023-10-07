@@ -33,7 +33,7 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
             <div className='flex flex-col'>
               <p className='text-gray-100 font-medium break-all'>{service.description?.title}</p>
               <p className='text-xs text-gray-500'>
-                Gig created by {proposal.service.buyer.handle} the{' '}
+                Bounty created by {proposal.service.buyer.handle} the{' '}
                 {formatDate(Number(proposal.service.createdAt) * 1000)}
               </p>
             </div>
