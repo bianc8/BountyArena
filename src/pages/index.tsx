@@ -95,7 +95,7 @@ function Home() {
                   className='wow fadeInUp relative z-10 mx-auto w-full max-w-[530px] pt-8 lg:mr-0'
                   data-wow-delay='.3s'>
                   <img
-                    src='/images/home/hero/hero-light.png'
+                    src='/images/home/hero/limone_soldier.png'
                     alt='hero image'
                     className='mx-auto max-w-full'
                   />
