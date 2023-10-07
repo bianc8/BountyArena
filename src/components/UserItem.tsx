@@ -15,7 +15,7 @@ function UserItem({ user }: { user: IUser }) {
   }
 
   return (
-    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
+    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
       <div className='flex flex-col items-top justify-between w-full'>
         <div className='flex flex-col justify-start items-start gap-4'>
           <div className='flex items-center justify-start mb-4'>
@@ -46,7 +46,7 @@ function UserItem({ user }: { user: IUser }) {
           </Link>
           {currentUser?.id === user.id && (
             <Link
-              className='text-green-600 bg-green-50 hover:bg-redpraha hover:text-white px-5 py-2 rounded'
+              className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'
               href={`/dashboard/profile/edit`}>
               Edit profile
             </Link>

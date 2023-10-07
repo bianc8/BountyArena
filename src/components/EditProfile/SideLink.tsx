@@ -14,10 +14,10 @@ function SideLink({
   const isDashboard = href == '/dashboard/profile/edit';
   let className = isDashboard
     ? router.asPath === href
-      ? 'text-primary-500 bg-redpraha'
+      ? 'text-primary-500 bg-[#FFAE00]'
       : ''
     : router.asPath.includes(href)
-    ? 'text-primary-500 bg-redpraha'
+    ? 'text-primary-500 bg-[#FFAE00]'
     : '';
 
   className +=
@@ -33,7 +33,7 @@ function SideLink({
       {children}
       {isCompleted && (
         <span>
-          <CheckIcon width={20} height={20} className='bg-white p-1 text-redpraha rounded-full' />
+          <CheckIcon width={20} height={20} className='bg-white p-1 text-[#FFAE00] rounded-full' />
         </span>
       )}
     </a>

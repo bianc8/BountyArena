@@ -114,14 +114,14 @@ function AdminPresentation() {
         validationSchema={validationSchema}>
         {({ isSubmitting, values }) => (
           <Form>
-            <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-endnight'>
+            <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-[#262424]'>
               <label className='block'>
                 <span className='text-gray-100'>Website</span>
                 <Field
                   type='text'
                   id='website'
                   name='website'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   placeholder=''
                 />
               </label>
@@ -132,7 +132,7 @@ function AdminPresentation() {
                   type='text'
                   id='image_url'
                   name='image_url'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   placeholder=''
                 />
                 <div className='border-gray-700 bg-gray-800 relative w-full border transition-all duration-300 rounded-xl p-4'>
@@ -151,7 +151,7 @@ function AdminPresentation() {
                   id='about'
                   name='about'
                   rows='4'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   placeholder=''
                 />
               </label>

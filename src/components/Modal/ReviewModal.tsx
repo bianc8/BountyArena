@@ -9,7 +9,7 @@ function ReviewModal({ service, userToReview }: { service: IService; userToRevie
     <>
       <button
         onClick={() => setShow(true)}
-        className='block text-green-600 bg-green-50 hover:bg-redpraha hover:text-white rounded-xl px-5 py-2.5 text-center'
+        className='block text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white rounded-xl px-5 py-2.5 text-center'
         type='button'
         data-modal-toggle='defaultModal'>
         Create a review

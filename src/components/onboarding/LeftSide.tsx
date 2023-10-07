@@ -1,6 +1,6 @@
 function LeftSide({ title, subtext }: { title: string; subtext: string }) {
   return (
-    <div className='bg-redpraha group relative hidden w-1/2 items-center justify-around overflow-hidden bg-gradient-to-tr md:flex'>
+    <div className='bg-[#FFAE00] group relative hidden w-1/2 items-center justify-around overflow-hidden bg-gradient-to-tr md:flex'>
       <div className='mx-auto max-w-xs text-center'>
         <h2 className='font-heading text-3xl font-medium leading-normal text-white mb-4'>
           {title}

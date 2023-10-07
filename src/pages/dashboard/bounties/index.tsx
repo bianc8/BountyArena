@@ -30,7 +30,7 @@ function Bounties() {
           </p>
           <Link
             href={`/dashboard/bounties/create`}
-            className=' hover:bg-endnight text-white bg-endnight px-3 py-2 text-sm flex items-center rounded-xl'>
+            className=' hover:bg-[#262424] text-white bg-[#262424] px-3 py-2 text-sm flex items-center rounded-xl'>
             <PlusCircleIcon className='w-[18px] h-[18px] text-redpraha mr-2' />
             Create Bounty
           </Link>
@@ -62,7 +62,7 @@ function Bounties() {
           <button
             type='submit'
             className={`px-5 py-2 mt-5 content-center border border-zinc-600 rounded-full text-zinc-600 
-              hover:text-white hover:bg-midnight
+              hover:text-white hover:bg-[#191919]
             `}
             disabled={!hasMoreData}
             onClick={() => loadMore()}>

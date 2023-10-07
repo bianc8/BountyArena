@@ -55,7 +55,7 @@ function DelegateModal() {
       {process.env.NEXT_PUBLIC_ACTIVE_DELEGATE === 'true' && (
         <button
           onClick={() => setShow(true)}
-          className='block text-blue-600 bg-red-50 hover:bg-redpraha hover:text-white rounded-xl px-5 py-2.5 text-center'
+          className='block text-blue-600 bg-red-50 hover:bg-[#FFAE00] hover:text-white rounded-xl px-5 py-2.5 text-center'
           type='button'
           data-modal-toggle='defaultModal'>
           Active Delegation
@@ -121,7 +121,7 @@ function DelegateModal() {
                 <button
                   onClick={() => onSubmit(true)}
                   type='button'
-                  className='hover:text-green-600 hover:bg-green-50 bg-redpraha text-white rounded-xl px-5 py-2.5 text-center'>
+                  className='hover:text-green-600 hover:bg-green-50 bg-[#FFAE00] text-white rounded-xl px-5 py-2.5 text-center'>
                   Validate Delegation
                 </button>
               )}

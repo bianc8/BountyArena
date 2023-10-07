@@ -135,7 +135,7 @@ function UserIncomes({ id }: { id: string }) {
                 <button
                   type='submit'
                   className={`px-5 py-2 mt-5 content-center border border-zinc-600 rounded-full text-zinc-600 
-              hover:text-white hover:bg-midnight
+              hover:text-white hover:bg-[#191919]
             `}
                   disabled={!hasMoreData}
                   onClick={() => loadMore()}>

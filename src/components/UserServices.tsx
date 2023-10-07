@@ -32,7 +32,7 @@ function UserServices({ user, type }: IProps) {
       {services.length === 20 && (
         <a
           href='#'
-          className='px-5 py-2  border border-zinc-600 rounded-full text-zinc-600 hover:text-white hover:bg-midnight'>
+          className='px-5 py-2  border border-zinc-600 rounded-full text-zinc-600 hover:text-white hover:bg-[#191919]'>
           Load More
         </a>
       )}

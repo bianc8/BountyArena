@@ -17,7 +17,7 @@ function SismoGroupCard({
   };
 
   return (
-    <div className='rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
+    <div className='rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
       <div className='flex flex-col items-top justify-between gap-4 w-full'>
         <div className='flex flex-col justify-start items-start gap-4 relative'>
           <div className='flex items-center justify-start'>

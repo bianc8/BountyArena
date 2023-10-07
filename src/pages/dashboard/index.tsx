@@ -26,8 +26,8 @@ function Dashboard() {
           </p>
           <Link
             href={`/dashboard/profile/edit`}
-            className=' hover:bg-endnight text-white bg-endnight px-3 py-2 text-sm flex items-center rounded-xl'>
-            <PencilSquareIcon className='w-[18px] h-[18px] text-redpraha mr-2' />
+            className=' hover:bg-[#262424] text-white bg-[#262424] px-3 py-2 text-sm flex items-center rounded-xl'>
+            <PencilSquareIcon className='w-[18px] h-[18px] text-[#FFAE00] mr-2' />
             Edit
           </Link>
         </div>

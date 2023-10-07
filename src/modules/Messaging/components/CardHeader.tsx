@@ -12,7 +12,7 @@ const CardHeader = ({ peerAddress }: IProps) => {
       <div className='flex py-2 px-6 items-center border-b w-full border-gray-700'>
         {peerAddress && (
           <>
-            <p className='w-full h-full flex items-center text-xs'>
+            <p className='w-full h-full flex items-center text-md'>
               To:
               <span className='pr-2'>
                 {user && user.handle ? <b>{user.handle}</b> : <b>{truncateAddress(peerAddress)}</b>}

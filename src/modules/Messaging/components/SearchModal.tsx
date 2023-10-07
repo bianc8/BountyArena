@@ -18,9 +18,9 @@ function SearchModal() {
     <>
       <button
         type='button'
-        className=' hover:bg-endnight text-white bg-endnight px-3 py-2 text-sm flex items-center mr-4 rounded-xl'
+        className=' hover:bg-[#262424] text-white bg-[#262424] px-3 py-2 text-sm flex items-center mr-4 rounded-xl'
         onClick={() => setShow(true)}>
-        <SearchOutline className='w-[18px] h-[18px] text-redpraha mr-2' />
+        <SearchOutline className='w-[18px] h-[18px] text-[#FFAE00] mr-2' />
         Search
       </button>
 
@@ -29,7 +29,7 @@ function SearchModal() {
           !show ? 'hidden' : ''
         } overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal h-full bg-black/90 flex flex-col items-center justify-center`}>
         <div className='relative w-full max-w-2xl h-auto'>
-          <div className='relative bg-endnightshadow '>
+          <div className='relative bg-[#262424]shadow '>
             <div className='fixed top-0 right-0'>
               <button
                 onClick={() => setShow(false)}
@@ -55,7 +55,7 @@ function SearchModal() {
                 <input
                   type='text'
                   name='search'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   onChange={e => {
                     setSearch(e.target.value);
                   }}
@@ -64,7 +64,7 @@ function SearchModal() {
               </div>
               <a
                 onClick={handleChat}
-                className='flex p-3 bg-endnight border-endnight rounded-xl justify-between mt-10 text-redpraha'>
+                className='flex p-3 bg-[#262424] border-endnight rounded-xl justify-between mt-10 text-[#FFAE00]'>
                 Chat
               </a>
             </div>

@@ -224,7 +224,7 @@ function ApplicationForm({
           <ServiceItem service={service} />
 
           <h2 className='text-md mt-8 mb-2 text-white font-bold'>Describe your application in details:</h2>
-          <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-endnight'>
+          <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-[#262424]'>
             <label className='block'>
               <span className='text-gray-100'>Description</span>
               <Field
@@ -232,7 +232,7 @@ function ApplicationForm({
                 id='description'
                 rows={8}
                 name='description'
-                className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                 placeholder=''
               />
               <span className='text-red-500'>
@@ -247,7 +247,7 @@ function ApplicationForm({
                   type='number'
                   id='rateAmount'
                   name='rateAmount'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   placeholder=''
                 />
                 <span className='text-red-500'>
@@ -260,7 +260,7 @@ function ApplicationForm({
                   component='select'
                   id='rateToken'
                   name='rateToken'
-                  className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   placeholder=''>
                   <option value=''>Select a token</option>
                   {allowedTokenList.map((token, index) => (
@@ -280,7 +280,7 @@ function ApplicationForm({
                 type='number'
                 id='expirationDate'
                 name='expirationDate'
-                className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                 placeholder=''
               />
               <span className='text-red-500'>
@@ -293,7 +293,7 @@ function ApplicationForm({
                 type='text'
                 id='video_url'
                 name='video_url'
-                className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                 placeholder='Enter video URL'
               />
               <span className='text-red-500'>
