@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUsers } from '../queries/users';
+import { getUserByPlatformId, getUsers } from '../queries/users';
 import { IUser } from '../types';
 import { useChainId } from './useChainId';
 
@@ -22,7 +22,8 @@ const useUsers = (
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await getUsers(chainId, numberPerPage, offset, searchQuery);
+        console.log("calling getUserByPlatformId with searchQuery: ", searchQuery)
+        const response = await getUserByPlatformId(chainId, numberPerPage, offset, searchQuery);
 
         if (offset === 0) {
           setUsers(response.data.data.users || []);

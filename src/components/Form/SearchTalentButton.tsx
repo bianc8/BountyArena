@@ -15,10 +15,10 @@ function SearchTalentButton(props?: { value?: string }) {
     const searchQueryRef = formElm.querySelector('input')!.value;
     if (searchQueryRef.length > 0) {
       router.push({
-        pathname: '/talents',
+        pathname: '/dashboard/talents',
         query: { search: searchQueryRef },
       });
-    } else router.push('/talents');
+    } else router.push('/dashboard/talents');
   }, []);
 
   return (
@@ -43,7 +43,7 @@ function SearchTalentButton(props?: { value?: string }) {
           <input
             className='text-gray-500 py-2 focus:ring-0 outline-none text-sm sm:text-lg border-0'
             type='text'
-            placeholder='Search by skills'
+            placeholder='Search by handle'
             onChange={e => setSearchQuery(e.target.value)}
             value={searchQuery}
           />

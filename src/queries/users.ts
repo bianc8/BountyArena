@@ -1,5 +1,35 @@
 import { processRequest } from '../utils/graphql';
 
+
+export const getUserByPlatformId = (
+  chainId: number,
+  numberPerPage?: number,
+  offset?: number,
+  searchQuery?: string,
+): Promise<any> => {
+  console.log(searchQuery)
+  const pagination = numberPerPage ? 'first: ' + numberPerPage + ', skip: ' + offset : '';
+  let condition = ', where: {';
+  condition += searchQuery ? `, handle_contains_nocase: "${searchQuery}"` : '';
+  condition += ', platform_: {id: "26"}}';
+
+  const query = `
+    {
+      users(orderBy: rating, orderDirection: desc ${pagination} ${condition}) {
+        id
+        address
+        handle
+        userStats {
+          numReceivedReviews
+        }
+        rating
+      }
+    }
+  `;
+
+  return processRequest(chainId, query);
+};
+
 export const getUsers = (
   chainId: number,
   numberPerPage?: number,

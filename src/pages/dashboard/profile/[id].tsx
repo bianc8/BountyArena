@@ -4,7 +4,8 @@ import UserDetail from '../../../components/UserDetail';
 import UserServices from '../../../components/UserServices';
 import useUserById from '../../../hooks/useUserById';
 import LensModule from '../../../modules/Lens/LensModule';
-import UserBadges from '../../../modules/Sismo/components/UserBadges';
+import UserReviews from '../../../components/UserReviews';
+// import UserBadges from '../../../modules/Sismo/components/UserBadges';
 
 function Profile() {
   const router = useRouter();
@@ -28,14 +29,17 @@ function Profile() {
             <div className='mb-6'>
               <UserDetail user={user} />
             </div>
-            <div className='mb-6'>
+            {/* <div className='mb-6'>
               <UserBadges user={user} />
-            </div>
+            </div> */}
             <div className='mb-6'>
               <UserServices user={user} type='buyer' />
             </div>
             <div className='mb-6'>
               <UserServices user={user} type='seller' />
+            </div>
+            <div className='mb-6'>
+              <UserReviews user={user} />
             </div>
             <div className='mb-6'>
               <LensModule address={user.address} />

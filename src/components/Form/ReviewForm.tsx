@@ -74,7 +74,7 @@ function ReviewForm({ serviceId }: { serviceId: string }) {
             functionName: 'mint',
             args: [user.id, serviceId, uri, values.rating],
             account: address,
-          });
+          });    
         }
 
         await createMultiStepsTransactionToast(

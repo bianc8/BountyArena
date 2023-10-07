@@ -22,7 +22,7 @@ function ReviewItem({ review }: { review: IReview }) {
             <div className='flex flex-col'>
               <p className='text-gray-100 font-medium break-all'>{review.to.handle}</p>
               <p className='text-xs text-gray-500'>
-                Review created the {formatDate(Number(review.createdAt) * 1000)}
+                Review created by {review.service.buyer.handle} the {formatDate(Number(review.createdAt) * 1000)}
               </p>
             </div>
           </div>
