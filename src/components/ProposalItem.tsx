@@ -38,6 +38,9 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
               <p className='text-xs text-gray-500'>
                 Proposal created the {formatDate(Number(proposal.createdAt) * 1000)}
               </p>
+              <p className='text-xs text-gray-500'>
+                Expires the {formatDate(Number(proposal.expirationDate) * 1000)}
+              </p>
             </div>
 
             <span className='absolute right-[-25px] top-[-25px] inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-800'>
@@ -52,11 +55,8 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
                 ? `${proposal.description?.about.substring(0, 50)}...`
                 : proposal.description?.about}
             </p>
-            <p className='text-sm text-gray-400 mt-4'>
-              <strong>Expiration Date:</strong> {formatDate(Number(proposal.expirationDate) * 1000)}
-            </p>
             {proposal.description?.video_url && (
-              <p className='text-sm text-gray-400 mt-4'>
+              <p className='text-sm text-gray-400'>
                 <a target='_blank' href={`${proposal.description?.video_url}`} className='underline'>
                   <strong>Repository link</strong>
                 </a>
@@ -71,7 +71,7 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
           {account && isBuyer && proposal.status === ProposalStatusEnum.Pending && (
             <ShowProposalModal proposal={proposal} />
           )}
-          {account && isBuyer && proposal.status === ProposalStatusEnum.Selected && (
+          {account && isBuyer && proposal.status === ProposalStatusEnum.Pending && (
             <ValidateProposalModal proposal={proposal} account={account} />
           )}
         </div>

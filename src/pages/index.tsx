@@ -23,24 +23,21 @@ function Home() {
       </header>
 
       <main>
-        <section id='home' className='pt-[65px]'>
+        <section id='home' className='pt-[20vh]'>
           <div className='container lg:max-w-[1305px] lg:px-10'>
             <div className='-mx-4 flex flex-wrap items-center'>
               <div className='w-full px-4 lg:w-7/12'>
                 <div className='wow fadeInUp mb-12 lg:mb-0 lg:max-w-[570px]' data-wow-delay='.2s'>
                   <span className='mb-5 block text-lg font-medium leading-tight text-black  sm:text-[22px] xl:text-[22px]'>
-                    Ready to Use NextJS dapp.
+                    Your go-to web3 app to handle Bounties 
                   </span>
-                  <h1 className='mb-6 text-3xl font-bold leading-tight text-black  sm:text-[40px] md:text-[50px] lg:text-[42px] xl:text-[50px]'>
-                    Using
+                  <h1 className='mb-6 text-3xl font-bold leading-tight text-black sm:text-[40px] md:text-[42px] lg:text-[42px] xl:text-[42px]'>
+                    Leveraging 
                     <span className='inline bg-[#FFAE00] bg-clip-text text-transparent mx-2'>
-                      TalentLayer & XMTP
-                    </span>
-                    protocols.
+                      TalentLayer, ENS & Snapshot
+                    </span>protocols.
                   </h1>
                   <p className='mb-10 max-w-[475px] text-base leading-relaxed text-body'>
-                    All essential components to start building an amazing dapp with interoperable
-                    work and messaging
                   </p>
 
                   <div className='flex flex-wrap items-center'>
