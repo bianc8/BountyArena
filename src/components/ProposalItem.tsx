@@ -71,7 +71,7 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
           {account && isBuyer && proposal.status === ProposalStatusEnum.Pending && (
             <ShowProposalModal proposal={proposal} />
           )}
-          {account && isBuyer && proposal.status === ProposalStatusEnum.Pending && (
+          {account && isBuyer && proposal.status === ProposalStatusEnum.Validated && (
             <ValidateProposalModal proposal={proposal} account={account} />
           )}
         </div>

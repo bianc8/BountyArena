@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TalentLayerContext from '../context/talentLayer';
 import usePaymentsByService from '../hooks/usePaymentsByService';
 import useProposalsByService from '../hooks/useProposalsByService';
 import useReviewsByService from '../hooks/useReviewsByService';
 import ContactButton from '../modules/Messaging/components/ContactButton';
-import { IService, ProposalStatusEnum, ServiceStatusEnum } from '../types';
+import { ISnapshotProposal, IService, ProposalStatusEnum, ServiceStatusEnum, ISnapshotProposalCreateRequest } from '../types';
 import { renderTokenAmountFromConfig } from '../utils/conversion';
 import { formatDate } from '../utils/dates';
 import PaymentModal from './Modal/PaymentModal';
@@ -16,6 +16,10 @@ import ReviewItem from './ReviewItem';
 import ServiceStatus from './ServiceStatus';
 import Stars from './Stars';
 import { useChainId } from '../hooks/useChainId';
+import axios from 'axios';
+import snapshot from '@snapshot-labs/snapshot.js';
+import { useEthersSigner } from '../utils/ethers';
+import { providers } from 'ethers'
 
 function ServiceDetail({ service }: { service: IService }) {
   const chainId = useChainId();
@@ -37,6 +41,119 @@ function ServiceDetail({ service }: { service: IService }) {
     return proposal.status === ProposalStatusEnum.Validated;
   });
 
+  const [snapshotProposal, setSnapshotProposal] = useState<ISnapshotProposal | null>(null);
+  const [proposalCreated, setProposalCreated] = useState<boolean>(false);
+  const snapshotSpace = "cagnazz.eth";
+  const bountyTitle = service.description?.title;
+  // ideally, this is true IFF bounty.deadline < now
+  const isBountyExpired = true;
+  // this should depend on the snapshot proposal (snapshotProposal.end)
+  const isSnapshotExpired = false;
+
+  const queryGetProposalByTitle =  (title: string | undefined) => {
+    return `
+      {
+        proposals(
+          skip: 0,
+          where: {
+            space_in: ["${snapshotSpace}"],
+            title_contains: "${title}",
+          },
+          orderBy: "created",
+          orderDirection: desc
+        ) {
+          id
+          title
+          body
+          choices
+          start
+          end
+          snapshot
+          state
+          author
+          created
+          scores
+          scores_by_strategy
+          scores_total
+          scores_updated
+          plugins
+          network
+          strategies {
+            name
+            network
+            params
+          }
+          space {
+            id
+            name
+          }
+        }
+      }
+    `
+  }
+
+  const getSnapshotProposal = async (query: string) => {
+    const graphqlEndpoint = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET + "/graphql";
+    let data;
+    try {
+      const response = await axios.post(graphqlEndpoint, {
+        query,
+      });
+      let proposals = response.data.data.proposals;
+      if (proposals.length > 0) {
+        data = proposals[0];
+      }
+    } catch (error) {
+      console.error('GraphQL Error:', error);
+    }
+    return data as ISnapshotProposal;
+  }
+
+  useEffect(() => {
+    const getProposal = async () => {
+      const proposal = await getSnapshotProposal(queryGetProposalByTitle(bountyTitle));
+      setSnapshotProposal(proposal);
+    }
+    getProposal();
+  }, [bountyTitle, proposalCreated]);
+
+  const signer = useEthersSigner()
+
+  const createSnapshotProposal = async () => {
+    const hub = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET;
+    const client = new snapshot.Client712(hub);
+    const ethersProvider = new providers.JsonRpcProvider(process.env.NEXT_PUBLIC_GOERLI_RPC_URL)
+
+    const blockNumber = await ethersProvider.getBlockNumber()
+    const startTimestamp = Math.floor(Date.now() / 1000);
+    // ends in 5 minutes
+    const endTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
+
+    const proposalToCreate: ISnapshotProposalCreateRequest = {
+      space: snapshotSpace,
+      type: 'approval',
+      title: bountyTitle || "",
+      body: `To read more about this bounty, go to http://localhost:3000/dashboard/bounties/${service.id}`,
+      discussion: '',
+      choices: proposals.map((proposal) => proposal.seller.handle),
+      start: startTimestamp,
+      end: endTimestamp,
+      snapshot: blockNumber,
+      plugins: JSON.stringify({}),
+    }
+
+    try {
+      //@ts-ignore
+      await client.proposal(signer, account?.address || "", proposalToCreate);
+    } catch(error) {
+      console.error("error on createSnapshotProposal", error);
+    }
+
+    setProposalCreated(true);
+  }
+
+  console.log(snapshotProposal)
+  
   return (
     <>
       <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
@@ -158,11 +275,44 @@ function ServiceDetail({ service }: { service: IService }) {
         </div>
       )}
 
+      {
+        isBuyer && (
+          <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424] mt-7'>
+            <div className='flex flex-row items-top gap-4 w-full justify-between'>
+              <div className='flex flex-row gap-2 items-center'>
+                <div className='flex items-center justify-start relative'>
+                  Voting Status:
+                </div>
+                <span className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700'>
+                  {
+                    proposals.length === 0 && "Waiting for proposals" ||
+                    isBountyExpired && !snapshotProposal && "To start" ||
+                    !isSnapshotExpired && snapshotProposal && "In progress" ||
+                    isSnapshotExpired && snapshotProposal && "Finished"
+                  }
+                </span>
+              </div>
+              {
+                proposals.length > 0 && isBountyExpired && !snapshotProposal && (
+                  <button className='text-md text-gray-400 bg-zinc-600 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm'
+                    onClick={() => {
+                      createSnapshotProposal();
+                    }}
+                  >
+                    Create Snapshot Proposal
+                  </button>
+                )
+              }
+            </div>
+          </div>
+        )
+      }
+
       {isBuyer && (
         <>
           {proposals.length > 0 ? (
             <>
-              <p className='text-gray-900 font-bold mt-12 mb-4'>
+              <p className='text-gray-900 font-bold mt-2 mb-4'>
                 {service.status === ServiceStatusEnum.Opened
                   ? 'Review proposals'
                   : 'Validated proposal'}

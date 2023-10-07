@@ -303,3 +303,37 @@ export type IUserGain = {
   token: IToken;
   totalGain: string;
 };
+
+export interface ISnapshotProposal {
+  id: string;
+  title: string;
+  body: string;
+  choices: string[];
+  start: number;
+  end: number;
+  snapshot: string;
+  state: string;
+  author: string;
+  created: number;
+  scores: number[];
+  scores_total: number;
+  scores_updated: number;
+  network: string;
+  space: {
+    id: string;
+    name: string;
+  };
+}
+
+export interface ISnapshotProposalCreateRequest {
+  space: string;
+  type: string;
+  title: string;
+  body: string;
+  discussion: string;
+  choices: string[];
+  start: number;
+  end: number;
+  snapshot: number;
+  plugins: string;
+}
