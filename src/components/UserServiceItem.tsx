@@ -62,7 +62,7 @@ function UserServiceItem({ user, service }: { user: IUser; service: IService }) 
           )}
           <Link
             className='text-zinc-600 bg-zinc-50 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm-xl relative'
-            href={`/dashboard/services/${service.id}`}>
+            href={`/dashboard/bounties/${service.id}`}>
             Show details
             {isBuyer && service.status == ServiceStatusEnum.Opened && (
               <div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-midnight rounded-full border-2 border-white'>

@@ -151,7 +151,7 @@ function ServiceForm() {
         setSubmitting(false);
         resetForm();
         if (newId) {
-          router.push(`/dashboard/services/${newId}`);
+          router.push(`/dashboard/bounties/${newId}`);
         }
         if (process.env.NEXT_PUBLIC_ACTIVE_WEB3MAIL == 'true' && !platformHasAccess) {
           createWeb3mailToast();

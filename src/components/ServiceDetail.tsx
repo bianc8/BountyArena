@@ -65,24 +65,30 @@ function ServiceDetail({ service }: { service: IService }) {
             <div className=' border-t border-gray-700 pt-4 w-full'>
               {service.seller && (
                 <Link
-                  className='text-sm text-gray-400 mt-4'
+                  className='text-md text-gray-400 mt-4'
                   href={`/dashboard/profile/${service.seller.id}`}>
                   Bounty submission by <span className='text-gray-100'>{service.seller.handle}</span>
                 </Link>
               )}
-              <div className='text-sm text-gray-400 mt-4'>
-                <strong>Employer rating:</strong>
+
+              <div className='text-md text-gray-400 mt-4'>
+                <strong>Proposer rating:</strong>
                 <Stars
                   rating={Number(service.buyer.rating)}
                   numReviews={service.buyer.userStats.numReceivedReviews}
                 />
               </div>
-              <p className='text-sm text-gray-400 mt-4'>
-                <strong>About:</strong> {service.description?.about}
-              </p>
+              <div>
+                <p className='text-md text-gray-400 mt-4'>
+                  <strong>Bounty description:</strong>
+                </p>
+                <p className='mt-2'>
+                  {service.description?.about}
+                </p>
+              </div>
               {service.description?.rateToken && service.description?.rateAmount && (
-                <p className='text-sm text-gray-400 mt-4'>
-                  <strong>Budget:</strong>{' '}
+                <p className='text-md mt-4'>
+                  <strong className='text-gray-400'>Budget:</strong>{' '}
                   {renderTokenAmountFromConfig(
                     chainId,
                     service.description.rateToken,
@@ -90,15 +96,17 @@ function ServiceDetail({ service }: { service: IService }) {
                   )}
                 </p>
               )}
-              <p className='text-sm text-gray-400 mt-4'>
-                <strong>Keywords:</strong>{' '}
+              <p className='text-md mt-4'>
+                <strong className='text-gray-400'>Keywords:</strong>{' '}
                 {service.description?.keywords_raw?.split(',').map((keyword, i) => (
                   <span
                     key={i}
                     className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2'>
                     {keyword}
                   </span>
-                ))}
+                )) || 
+                  'none'
+                }
               </p>
             </div>
           </div>
@@ -109,8 +117,8 @@ function ServiceDetail({ service }: { service: IService }) {
                 {!userProposal && (
                   <Link
                     className='text-white bg-redpraha hover:redpraha/80 hover:text-white px-3 py-2 rounded text-sm'
-                    href={`/dashboard/services/${service.id}/proposal`}>
-                    Create proposal
+                    href={`/dashboard/bounties/${service.id}/application`}>
+                    Submit application
                   </Link>
                 )}
                 <ContactButton

@@ -31,7 +31,8 @@ function ServiceItem({ service }: { service: IService }) {
 
         <div className='flex flex-row gap-4 justify-between items-center border-t border-gray-700 pt-4'>
           {service.description?.rateToken && service.description?.rateAmount && (
-            <p className='text-gray-300 font-bold line-clamp-1 max-w-[100px]'>
+            <p className='text-gray-300 font-bold line-clamp-1 max-w-[200px]'>
+              <span className='mr-1'>Prize</span>  
               {renderTokenAmountFromConfig(
                 chainId,
                 service.description.rateToken,
@@ -41,7 +42,7 @@ function ServiceItem({ service }: { service: IService }) {
           )}
           <Link
             className='text-zinc-600 bg-zinc-50 hover:bg-zinc-500 hover:text-white px-4 py-1.5 rounded btn-sm'
-            href={`/dashboard/services/${service.id}`}>
+            href={`/dashboard/bounties/${service.id}`}>
             Show details
           </Link>
         </div>

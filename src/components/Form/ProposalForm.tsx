@@ -40,7 +40,7 @@ const validationSchema = Yup.object({
   expirationDate: Yup.number().integer().required('Please provide an expiration date'),
 });
 
-function ProposalForm({
+function ApplicationForm({
   user,
   service,
   existingProposal,
@@ -95,24 +95,24 @@ function ProposalForm({
     video_url: existingProposal?.description?.video_url || '',
   };
 
-  const askAI = async (input: string, setFieldValue: any) => {
-    setAiLoading(true);
-    const context = 'I am a freelance and I need help to generate a proposal for a bounty.';
-    const serviceContext = `The is the job title:${service?.description?.title}.`;
-    const serviceBuyerContext = `This is the client name:${service.buyer.handle}.`;
-    const userContext = `My name is:${user.handle}. And this is a bit more about me: ${user?.description?.about}.`;
-    const proposalContext = `And this is some information about the proposal I want to makde: ${input}.`;
-    const agregatedContext =
-      context + serviceContext + serviceBuyerContext + userContext + proposalContext;
-    try {
-      const responseText = await postOpenAiRequest(agregatedContext);
-      setFieldValue('about', responseText);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setAiLoading(false);
-    }
-  };
+  // const askAI = async (input: string, setFieldValue: any) => {
+  //   setAiLoading(true);
+  //   const context = 'I am a freelance and I need help to generate a proposal for a bounty.';
+  //   const serviceContext = `The is the job title:${service?.description?.title}.`;
+  //   const serviceBuyerContext = `This is the client name:${service.buyer.handle}.`;
+  //   const userContext = `My name is:${user.handle}. And this is a bit more about me: ${user?.description?.about}.`;
+  //   const proposalContext = `And this is some information about the proposal I want to makde: ${input}.`;
+  //   const agregatedContext =
+  //     context + serviceContext + serviceBuyerContext + userContext + proposalContext;
+  //   try {
+  //     const responseText = await postOpenAiRequest(agregatedContext);
+  //     setFieldValue('about', responseText);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setAiLoading(false);
+  //   }
+  // };
 
   const onSubmit = async (
     values: IFormValues,
@@ -220,49 +220,23 @@ function ProposalForm({
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
       {({ isSubmitting, values, setFieldValue }) => (
         <Form>
-          <h2 className='mb-2 text-white font-bold'>For the job:</h2>
+          <h2 className='mb-2 text-white font-bold'>For the bounty:</h2>
           <ServiceItem service={service} />
 
-          <h2 className=' mt-8 mb-2 text-white font-bold'>Describe your proposal in details:</h2>
+          <h2 className='text-md mt-8 mb-2 text-white font-bold'>Describe your application in details:</h2>
           <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-endnight'>
             <label className='block'>
-              <span className='text-gray-100'>about</span>
+              <span className='text-gray-100'>Description</span>
               <Field
                 as='textarea'
-                id='about'
+                id='description'
                 rows={8}
-                name='about'
+                name='description'
                 className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
                 placeholder=''
               />
-              <div className='border-gray-700 bg-gray-800 relative w-full border transition-all duration-300 rounded-xl p-4'>
-                <div className='flex w-full items-center gap-3'>
-                  <QuestionMarkCircle className='hidden' />
-                  <div>
-                    <h2 className='font-heading text-xs font-bold text-white mb-1'>
-                      <span>Need help?</span>
-                    </h2>
-                    <p className='font-alt text-xs font-normal'>
-                      <span className='text-gray-400'>
-                        Write few lines above and get some help from our AI
-                      </span>
-                    </p>
-                  </div>
-                  <div className='ms-auto'>
-                    <button
-                      disabled={aiLoading}
-                      onClick={e => {
-                        e.preventDefault();
-                        askAI(values.about, setFieldValue);
-                      }}
-                      className='border text-white bg-gray-700 hover:bg-gray-600 border-gray-600 rounded-md h-10 w-10 p-2 relative inline-flex items-center justify-center space-x-1 font-sans text-sm font-normal leading-5 no-underline outline-none transition-all duration-300'>
-                      {aiLoading ? <Loading /> : 'GO'}
-                    </button>
-                  </div>
-                </div>
-              </div>
               <span className='text-red-500'>
-                <ErrorMessage name='about' />
+                <ErrorMessage name='description' />
               </span>
             </label>
 
@@ -340,4 +314,4 @@ function ProposalForm({
   );
 }
 
-export default ProposalForm;
+export default ApplicationForm;

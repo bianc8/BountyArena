@@ -4,7 +4,7 @@ import Loading from '../../../components/Loading';
 import ServiceDetail from '../../../components/ServiceDetail';
 import useServiceById from '../../../hooks/useServiceById';
 
-function Service() {
+function Bounty() {
   const router = useRouter();
   const { id } = router.query;
   const service = useServiceById(id as string);
@@ -21,4 +21,4 @@ function Service() {
   );
 }
 
-export default Service;
+export default Bounty;
