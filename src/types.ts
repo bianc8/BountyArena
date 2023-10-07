@@ -214,6 +214,7 @@ export enum ServiceStatusEnum {
 
 export enum ProposalStatusEnum {
   Pending = 'Pending',
+  Selected = 'Selected',
   Validated = 'Validated',
   Rejected = 'Rejected',
 }

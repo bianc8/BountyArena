@@ -6,6 +6,7 @@ import { IProposal, ProposalStatusEnum, ServiceStatusEnum } from '../types';
 import { renderTokenAmount } from '../utils/conversion';
 import { formatDate } from '../utils/dates';
 import ValidateProposalModal from './Modal/ValidateProposalModal';
+import ShowProposalModal from './Modal/ShowProposalModal';
 import Image from 'next/image';
 
 function ProposalItem({ proposal }: { proposal: IProposal }) {
@@ -46,7 +47,10 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
 
           <div className=' border-t border-gray-700 w-full'>
             <p className='text-sm text-gray-400 mt-4'>
-              <strong>Message:</strong> {proposal.description?.about}
+              <strong>Message: </strong>
+              {proposal.description?.about && proposal.description.about.length > 50
+                ? `${proposal.description?.about.substring(0, 50)}...`
+                : proposal.description?.about}
             </p>
             <p className='text-sm text-gray-400 mt-4'>
               <strong>Expiration Date:</strong> {formatDate(Number(proposal.expirationDate) * 1000)}
@@ -65,6 +69,9 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
             {renderTokenAmount(proposal.rateToken, proposal.rateAmount)}
           </p>
           {account && isBuyer && proposal.status === ProposalStatusEnum.Pending && (
+            <ShowProposalModal proposal={proposal} />
+          )}
+          {account && isBuyer && proposal.status === ProposalStatusEnum.Selected && (
             <ValidateProposalModal proposal={proposal} account={account} />
           )}
         </div>

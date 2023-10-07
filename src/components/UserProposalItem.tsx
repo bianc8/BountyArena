@@ -66,6 +66,13 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
             Show Bounty
           </Link>
           {isBuyer && proposal.status === ProposalStatusEnum.Pending && (
+            <Link
+              className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'
+              href={`/dashboard/bounties/${proposal.service.id}`}>
+              Learn More and Accept
+            </Link>
+          )}
+          {isBuyer && proposal.status === ProposalStatusEnum.Selected && (
             <button className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'>
               Validate
             </button>
