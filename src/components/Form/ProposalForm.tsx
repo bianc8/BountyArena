@@ -57,7 +57,8 @@ function ApplicationForm({
 
   const currentChain = chains.find(chain => chain.id === chainId);
   const platform = usePlatform(process.env.NEXT_PUBLIC_PLATFORM_ID as string);
-  const proposalPostingFee = platform?.proposalPostingFee || 0;
+  console.log("platform", platform)
+  const proposalPostingFee = platform?.proposalPostingFee ? +platform.proposalPostingFee : 0;
   const proposalPostingFeeFormat = proposalPostingFee
     ? Number(formatUnits(BigInt(proposalPostingFee), Number(currentChain?.nativeCurrency.decimals)))
     : 0;
@@ -82,13 +83,20 @@ function ApplicationForm({
     );
   }
 
+  console.log("existingExpirationDate", existingExpirationDate)
+  console.log("existingRateTokenAmount", existingRateTokenAmount)
+
   const initialValues: IFormValues = {
     about: existingProposal?.description?.about || '',
-    rateToken: existingProposal?.rateToken.address || allowedTokenList[0].address,
-    rateAmount: existingRateTokenAmount || (service.description?.rateAmount ? +service.description?.rateAmount : 0 ),
-    expirationDate: existingExpirationDate || 15,
+    rateToken: /*existingProposal?.rateToken.address ||*/ allowedTokenList[1].address,
+    rateAmount: 
+      (existingProposal?.rateAmount ? +existingProposal.rateAmount : 0) || 
+      (service.description?.rateAmount ? +service.description?.rateAmount : 0 ),
+    expirationDate: existingExpirationDate || 14,
     video_url: existingProposal?.description?.video_url || '',
   };
+
+  console.log("initialValues", initialValues)
 
   const onSubmit = async (
     values: IFormValues,
@@ -128,12 +136,14 @@ function ApplicationForm({
             service.id,
             values.rateToken,
             values.rateAmount.toString(),
+            // parsedRateAmountString,
             cid,
             convertExpirationDateString,
             existingProposal?.status,
           );
           tx = response.data.transaction;
         } else {
+          console.log("write contract with proposalPostingFee", proposalPostingFee)
           tx = await walletClient.writeContract({
             address: config.contracts.serviceRegistry,
             abi: ServiceRegistry.abi,
@@ -213,20 +223,7 @@ function ApplicationForm({
             </label>
 
             <label className='block flex-1'>
-              <span className='text-gray-100'>Expiration Date (Days)</span>
-              <Field
-                type='number'
-                id='expirationDate'
-                name='expirationDate'
-                className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
-                placeholder=''
-              />
-              <span className='text-red-500'>
-                <ErrorMessage name='expirationDate' />
-              </span>
-            </label>
-            <label className='block flex-1'>
-              <span className='text-gray-100'>Video URL (optional)</span>
+              <span className='text-gray-100'>GitHub Repo URL</span>
               <Field
                 type='text'
                 id='video_url'
