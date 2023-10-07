@@ -12,7 +12,6 @@ import { useConfig } from '../../hooks/useConfig';
 import Web3MailContext from '../../modules/Web3mail/context/web3mail';
 import { createWeb3mailToast } from '../../modules/Web3mail/utils/toast';
 import { IProposal, IService, IUser } from '../../types';
-import { parseRateAmount } from '../../utils/currency';
 import { postToIPFS } from '../../utils/ipfs';
 import { getProposalSignature } from '../../utils/signature';
 import { createMultiStepsTransactionToast, showErrorTransactionToast } from '../../utils/toast';
@@ -85,8 +84,8 @@ function ApplicationForm({
 
   const initialValues: IFormValues = {
     about: existingProposal?.description?.about || '',
-    rateToken: existingProposal?.rateToken.address || '',
-    rateAmount: existingRateTokenAmount || 0,
+    rateToken: existingProposal?.rateToken.address || allowedTokenList[0].address,
+    rateAmount: existingRateTokenAmount || (service.description?.rateAmount ? +service.description?.rateAmount : 0 ),
     expirationDate: existingExpirationDate || 15,
     video_url: existingProposal?.description?.video_url || '',
   };
@@ -102,16 +101,9 @@ function ApplicationForm({
     const token = allowedTokenList.find(token => token.address === values.rateToken);
     if (publicClient && token && walletClient) {
       try {
-        const parsedRateAmount = await parseRateAmount(
-          values.rateAmount.toString(),
-          values.rateToken,
-          token.decimals,
-        );
         const now = Math.floor(Date.now() / 1000);
         const convertExpirationDate = now + 60 * 60 * 24 * values.expirationDate;
         const convertExpirationDateString = convertExpirationDate.toString();
-
-        const parsedRateAmountString = parsedRateAmount.toString();
 
         const cid = await postToIPFS(
           JSON.stringify({
@@ -135,7 +127,7 @@ function ApplicationForm({
             user.address,
             service.id,
             values.rateToken,
-            parsedRateAmountString,
+            values.rateAmount.toString(),
             cid,
             convertExpirationDateString,
             existingProposal?.status,
@@ -151,7 +143,8 @@ function ApplicationForm({
                   user.id,
                   service.id,
                   values.rateToken,
-                  parsedRateAmountString,
+                  // parsedRateAmountString,
+                  values.rateAmount.toString(),
                   cid,
                   convertExpirationDateString,
                 ]
@@ -159,7 +152,8 @@ function ApplicationForm({
                   user.id,
                   service.id,
                   values.rateToken,
-                  parsedRateAmountString,
+                  // parsedRateAmountString,
+                  values.rateAmount.toString(),
                   process.env.NEXT_PUBLIC_PLATFORM_ID,
                   cid,
                   convertExpirationDateString,
@@ -218,40 +212,6 @@ function ApplicationForm({
               </span>
             </label>
 
-            <div className='flex'>
-              <label className='block flex-1 mr-4'>
-                <span className='text-gray-100'>Amount</span>
-                <Field
-                  type='number'
-                  id='rateAmount'
-                  name='rateAmount'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
-                  placeholder=''
-                />
-                <span className='text-red-500'>
-                  <ErrorMessage name='rateAmount' />
-                </span>
-              </label>
-              <label className='block'>
-                <span className='text-gray-100'>Token</span>
-                <Field
-                  component='select'
-                  id='rateToken'
-                  name='rateToken'
-                  className='mt-1 mb-2 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
-                  placeholder=''>
-                  <option value=''>Select a token</option>
-                  {allowedTokenList.map((token, index) => (
-                    <option key={index} value={token.address}>
-                      {token.symbol}
-                    </option>
-                  ))}
-                </Field>
-                <span className='text-red-500'>
-                  <ErrorMessage name='rateToken' />
-                </span>
-              </label>
-            </div>
             <label className='block flex-1'>
               <span className='text-gray-100'>Expiration Date (Days)</span>
               <Field
