@@ -22,7 +22,7 @@ const MessageComposer = ({
     return (
       !sendingPending && (
         <button
-          className='hover:bg-endnight bg-redpraha text-white font-bold py-2 px-4 -ml-2 min-w-[20%] shrink-0'
+          className='hover:bg-[#FF5500] bg-[#FFAE00] text-white font-bold py-2 px-4 -ml-2 min-w-[20%] shrink-0'
           onClick={sendNewMessage}
           disabled={!peerUserExists || !peerUserExistsOnTalentLayer}>
           Send
@@ -33,9 +33,9 @@ const MessageComposer = ({
 
   return (
     <>
-      <div className='flex flex-row pt-5 fixed bottom-[64px] md:bottom-0 w-full md:w-[calc(100vw-256px)]'>
+      <div className='ml-[-23px] flex flex-row pt-5 fixed bottom-[64px] md:bottom-0 w-full md:w-[calc(100vw-256px)]'>
         <input
-          className='w-full py-4 px-3 bg-[#24243f] border-0 text-white text-sm'
+          className='w-full py-4 px-3 bg-[#262424] border-0 text-white text-sm'
           type='text'
           onChange={e => setMessageContent(e.target.value)}
           placeholder='Write a message'

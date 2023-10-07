@@ -40,11 +40,11 @@ export function SkillsInput({
       <div
         key={skill}
         className={
-          'leading-tight mr-2 inline-flex items-center rounded-full bg-midnight p-1 pl-3 text-xs text-gray-200'
+          'leading-tight mr-2 inline-flex items-center rounded-full bg-[#191919] p-1 pl-3 text-xs text-gray-200'
         }>
         <span>{skill}</span>
         <span
-          className={'ml-2 cursor-pointer rounded-full bg-redpraha text-center'}
+          className={'ml-2 cursor-pointer rounded-full bg-[#FFAE00] text-center'}
           onClick={() => {
             const newSkills = [...allSkills];
             newSkills.splice(newSkills.indexOf(skill), 1);
@@ -68,7 +68,7 @@ export function SkillsInput({
         <div className='relative'>
           <div className='relative mb-2'>
             <Combobox.Input
-              className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+              className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
               onChange={event => debounceSetQuery(event.target.value)}
             />
           </div>

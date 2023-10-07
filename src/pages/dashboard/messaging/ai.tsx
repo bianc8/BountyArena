@@ -21,12 +21,12 @@ const ChatMessage = ({ text, from }: MessageProps) => {
   return (
     <>
       {from == Creator.Me && (
-        <div className=' bg-endnight border border-redpraha p-4 rounded-lg flex gap-4 items-center whitespace-pre-wrap mb-2'>
+        <div className=' bg-[#262424] border border-redpraha p-4 rounded-lg flex gap-4 items-center whitespace-pre-wrap mb-2'>
           <p className=' text-gray-700'></p>
         </div>
       )}
       {from == Creator.Bot && (
-        <div className='bg-endnight p-4 rounded-lg flex gap-4 items-center whitespace-pre-wrap mb-2'>
+        <div className='bg-[#262424] p-4 rounded-lg flex gap-4 items-center whitespace-pre-wrap mb-2'>
           <p className='text-white'>{text}</p>
         </div>
       )}
@@ -63,7 +63,7 @@ const ChatInput = ({ onSend, disable }: InputProps) => {
       {!disable && (
         <button
           onClick={() => sendInput()}
-          className='grow px-5 py-2 rounded-xl bg-redpraha text-white'>
+          className='grow px-5 py-2 rounded-xl bg-[#FFAE00] text-white'>
           <p>send</p>
         </button>
       )}

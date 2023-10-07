@@ -130,7 +130,7 @@ function ReleaseForm({
               {totalInEscrow > 0 && (
                 <button
                   type='submit'
-                  className=' hover:bg-endnight hover:text-white bg-redpraha text-midnight px-5 py-2 rounded'>
+                  className=' hover:bg-[#262424] hover:text-white bg-[#FFAE00] text-midnight px-5 py-2 rounded'>
                   {isBuyer ? 'Release the selected amount' : 'Reimburse the selected amount'}
                 </button>
               )}

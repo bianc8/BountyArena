@@ -26,7 +26,7 @@ function EditSettings() {
             Learn More{' '}
           </a>
         </div>
-        <div className='absolute right-2 bottom-2 z-10 flex h-14 w-14 items-center justify-center text-redpraha'>
+        <div className='absolute right-2 bottom-2 z-10 flex h-14 w-14 items-center justify-center text-[#FFAE00]'>
           <Cog8ToothIcon width={56} height={56} />
         </div>
       </div>

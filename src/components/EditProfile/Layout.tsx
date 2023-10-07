@@ -27,8 +27,8 @@ function Layout({ children, className }: ContainerProps) {
 
             <Link
               href={`/dashboard/profile/${user.id}`}
-              className=' hover:bg-endnight text-white bg-endnight px-3 py-2 text-sm flex items-center rounded-xl'>
-              <EyeIcon className='w-[18px] h-[18px] text-redpraha mr-2' />
+              className=' hover:bg-[#262424] text-white bg-[#262424] px-3 py-2 text-sm flex items-center rounded-xl'>
+              <EyeIcon className='w-[18px] h-[18px] text-[#FFAE00] mr-2' />
               Public page
             </Link>
           </div>
@@ -40,7 +40,7 @@ function Layout({ children, className }: ContainerProps) {
               <div className='grid xl:gap-8 xl:grid-cols-12'>
                 <div className='col-span-12 xl:col-span-4 mb-4 xl:mb-0'>
                   <div className='flex w-full items-center gap-2'>
-                    <div className='border-gray-700 bg-endnight relative w-full border transition-all duration-300 rounded-md flex flex-col p-6'>
+                    <div className='border-gray-700 bg-[#262424] relative w-full border transition-all duration-300 rounded-md flex flex-col p-6'>
                       <div className='flex items-center'>
                         <div className='relative inline-flex shrink-0 items-center justify-center outline-none h-12 w-12 rounded-full mr-4'>
                           <div className='flex h-full w-full items-center justify-center overflow-hidden text-center transition-all duration-300 rounded-full'>
@@ -77,7 +77,7 @@ function Layout({ children, className }: ContainerProps) {
                           role='progressbar'
                           className='bg-gray-700 relative w-full overflow-hidden h-1 rounded-full'>
                           <div
-                            className='bg-redpraha rounded-full absolute start-0 top-0 h-full transition-all duration-300'
+                            className='bg-[#FFAE00] rounded-full absolute start-0 top-0 h-full transition-all duration-300'
                             style={{ width: completionScores?.total.percentage + '%' }}
                           />
                         </div>
@@ -96,7 +96,7 @@ function Layout({ children, className }: ContainerProps) {
                 </div>
                 <div className='col-span-12 xl:col-span-8'>
                   <div className='pb-16 border-gray-700 relative w-full transition-all duration-300 rounded-md'>
-                    <div className='border border-gray-700 rounded-xl p-6 bg-endnight'>
+                    <div className='border border-gray-700 rounded-xl p-6 bg-[#262424]'>
                       {children}
                     </div>
                   </div>

@@ -31,7 +31,7 @@ function UserLensProfile({ lensUser }: IProps) {
             <a
               href={`https://lenster.xyz/u/${lensUser.handle}`}
               target='_blank'
-              className='bg-redpraha hover:bg-green-600 text-white font-bold py-2 px-4 rounded'>
+              className='bg-[#FFAE00] hover:bg-green-600 text-white font-bold py-2 px-4 rounded'>
               Follow me
             </a>
           </div>

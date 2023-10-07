@@ -21,7 +21,7 @@ function UserPayments({ user }: { user: IUser }) {
           return (
             <Link
               href={`/dashboard/services/${payment.service.id}`}
-              className='flex items-center p-4 bg-endnight rounded-xl border border-gray-700'
+              className='flex items-center p-4 bg-[#262424] rounded-xl border border-gray-700'
               key={i}>
               <div className='flex flex-shrink-0 items-center justify-center bg-green-200 h-16 w-16 rounded'>
                 <svg

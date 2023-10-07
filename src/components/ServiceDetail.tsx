@@ -39,7 +39,7 @@ function ServiceDetail({ service }: { service: IService }) {
 
   return (
     <>
-      <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
+      <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
         <div className='flex flex-col items-top justify-between gap-4 w-full'>
           <div className='flex flex-col justify-start items-start gap-4'>
             <div className='flex items-center justify-start w-full relative'>
@@ -108,7 +108,7 @@ function ServiceDetail({ service }: { service: IService }) {
               <>
                 {!userProposal && (
                   <Link
-                    className='text-white bg-redpraha hover:redpraha/80 hover:text-white px-3 py-2 rounded text-sm'
+                    className='text-white bg-[#FFAE00] hover:redpraha/80 hover:text-white px-3 py-2 rounded text-sm'
                     href={`/dashboard/services/${service.id}/proposal`}>
                     Create proposal
                   </Link>

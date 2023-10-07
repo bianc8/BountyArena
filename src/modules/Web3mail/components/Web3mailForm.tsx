@@ -85,7 +85,7 @@ function Web3mailForm() {
                     type='text'
                     id='email'
                     name='email'
-                    className='cursor-not-allowed mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                    className='cursor-not-allowed mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                     placeholder='**********'
                     readOnly
                     disabled
@@ -100,7 +100,7 @@ function Web3mailForm() {
                   type='text'
                   id='email'
                   name='email'
-                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-midnight shadow-sm focus:ring-opacity-50'
+                  className='mt-1 mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50'
                   placeholder=''
                 />
               )}

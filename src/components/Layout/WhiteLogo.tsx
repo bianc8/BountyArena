@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 function WhiteLogo({ theme = 'dark' }: { theme?: 'dark' | 'light' }) {
   return (
-    <h1 className={`text-1xl ${theme == 'light' ? 'text-white' : 'text-redpraha'}`}>
+    <h1 className={`text-1xl ${theme == 'light' ? 'text-white' : 'text-[#FFAE00]'}`}>
       <Link href='/' className='flex items-center'>
         <Image
           src={'/logo-text-white.png'}

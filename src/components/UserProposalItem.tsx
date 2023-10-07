@@ -19,7 +19,7 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
   const isBuyer = user?.id === proposal.service.buyer.id;
 
   return (
-    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
+    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
       <div className='flex flex-col items-top justify-between gap-4 w-full'>
         <div className='flex flex-col justify-start items-start gap-4'>
           <div className='flex items-center justify-start w-full  relative'>
@@ -66,7 +66,7 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
             Show Gig
           </Link>
           {isBuyer && proposal.status === ProposalStatusEnum.Pending && (
-            <button className='text-green-600 bg-green-50 hover:bg-redpraha hover:text-white px-5 py-2 rounded'>
+            <button className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'>
               Validate
             </button>
           )}

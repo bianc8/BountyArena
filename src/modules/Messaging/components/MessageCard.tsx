@@ -37,7 +37,7 @@ const MessageCard = ({ message, dateHasChanged }: IMessageCardProps) => {
           <div
             className={`py-3 px-4 text-sm ${
               isSender && message.status === ChatMessageStatus.SENT
-                ? 'ml-12 bg-[#b2c9f7] text-midnight rounded-bl-2xl rounded-tl-2xl rounded-tr-xl'
+                ? 'ml-12 bg-[#ffae00] text-midnight rounded-bl-2xl rounded-tl-2xl rounded-tr-xl'
                 : isSender && message.status === ChatMessageStatus.ERROR
                 ? 'ml-12 bg-red-600 rounded-br-2xl rounded-tl-2xl rounded-tr-xl'
                 : isSender && message.status === ChatMessageStatus.PENDING

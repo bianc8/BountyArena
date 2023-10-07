@@ -9,7 +9,7 @@ module.exports = {
       ...colors,
       midnight: '#0f172a',
       endnight: '#1e293b',
-      redpraha: '#ff0050',
+      redpraha: '#FFAE00',
       yellowpraha: '#fff490',
       bluepraha: '#90f6ff',
     },
