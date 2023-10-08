@@ -307,7 +307,7 @@ function ServiceDetail({ service }: { service: IService }) {
                 </Link>
               )}
 
-              <div className='text-md text-gray-400 mt-4'>
+              <div className='flex text-md text-gray-400 mt-4'>
                 <strong>Proposer rating:</strong>
                 <Stars
                   rating={Number(service.buyer.rating)}
@@ -466,7 +466,7 @@ function ServiceDetail({ service }: { service: IService }) {
 
       {userProposal && (
         <div className='flex flex-col gap-4 mt-4'>
-          <p className='text-gray-900 font-bold'>Your proposal:</p>
+          <p className='text-gray-900 font-bold'>Your Proposal:</p>
           <ProposalItem proposal={userProposal} />
         </div>
       )}

@@ -98,13 +98,14 @@ function ReviewItem({
                 </div>
                 <div className='p-6 space-y-6'>
                   <div className='flex flex-col px-4 w-full space-y-6'>
-                    <h3 className='text-xl font-semibold text-gray-900 '>Why should you claim it?</h3>
-                    <p className='text-base leading-4 text-gray-800 mb-4'>
+                    <div className='flex flex-row justify-between'>
+                      <h3 className='text-xl font-semibold text-gray-900 '>Why should you claim it?</h3>
                       <img
                         src='https://raw.githubusercontent.com/ensdomains/media-kit/main/media/logos/primary/ens_logo_primary.svg'
-                        width="50%"
-                        className='mb-6'
+                        width="15%"
                       />
+                    </div>
+                    <p className='text-base leading-4 text-gray-800 mb-4'>
                       You can use your VC to prove your reputation in other platforms without the need of using only NFTs on this platform blockchain.
                       So we thougth to give you the possibility to claim your VC and save it on your ENS text-records. This way you can continue to build your identity and reputation
                       using ENS.
@@ -153,7 +154,7 @@ function ReviewItem({
                       onClick={handleGetVC}
                       disabled={vc ? true : false}
                     >
-                      Claims your VC
+                      Claim your VC
                     </button>
                   </div>
                 </div>

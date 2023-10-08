@@ -14,7 +14,7 @@ function UserPayments({ user }: { user: IUser }) {
   return (
     <>
       <h2 className='mb-6 pb-4 border-b border-gray-gray-200 text-gray-100 font-medium break-all'>
-        Your last incomes
+        Your last Incomes
       </h2>
       <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
         {payments.map((payment, i) => {

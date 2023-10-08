@@ -76,7 +76,7 @@ function UserDetail({ user }: { user: IUser }) {
             <Link
               className='px-3 py-2 rounded text-sm border border-[#FFAE00] text-[#FFAE00] hover:bg-gray-700 transition ease-in-out duration-150'
               href={`/dashboard/profile/incomes`}>
-              Your incomes
+              Your Incomes
             </Link>
             {process.env.NEXT_PUBLIC_ACTIVE_DELEGATE === 'true' && <DelegateModal />}
           </div>

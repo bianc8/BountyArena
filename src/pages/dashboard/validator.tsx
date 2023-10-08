@@ -18,7 +18,7 @@ function validator() {
   return (
     <div className='max-w-7xl mx-auto text-gray-200 sm:px-4 lg:px-0'>
       <div className='-mx-6 -mt-6 sm:mx-0 sm:mt-0'>
-        <p className='flex py-2 px-6 sm:px-0 items-center text-2xl font-medium tracking-wider mb-8 border-b w-full border-gray-700 md:px-8 '>
+        <p className='flex py-2 sm:px-0 items-center text-2xl font-medium tracking-wider mb-8 border-b w-full border-gray-700'>
           Validate a <span className='text-gray-100 ml-1'> Verifiable Credential (VC)</span>
         </p>
       </div>
@@ -36,7 +36,7 @@ function validator() {
         If you want to check it manually, take care that our issuer DID is:
       </p>
 
-      <pre className='bg-gray-500 text-white text-center w-1/2 m-auto mb-8 mt-8 p-3 rounded-lg text-lg'>
+      <pre className='bg-gray-500 text-white text-center m-auto mb-8 mt-8 p-3 px-5 rounded-lg text-lg w-fit'>
         {process.env.NEXT_PUBLIC_DID_KEY}
       </pre>
 
@@ -60,12 +60,22 @@ function validator() {
 
       {verificationResult && (
         <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-[#262424] mt-4 align-middle'>
-          <div className='flex gap-4 items-center align-top'>
-            <p className='text-xl font-medium tracking-wider'>Verification Result</p>
+          <div className='flex gap-2 items-center align-top'>
+            <p className='text-xl font-medium tracking-wider'>Result:</p>
             {verificationResult.verified ? (
-              <img src='/images/bountyarena/success.png' className='w-10 h-10' />
+              <>
+                <p className='text-xl font-medium tracking-wider'>
+                  Valid
+                </p>
+                <img src='/images/bountyarena/success.png' className='w-5 h-5' />
+              </>
             ) : (
-              <img src='/images/bountyarena/error.png' className='w-10 h-10' />
+              <>
+                <p className='text-xl font-medium tracking-wider'>
+                  Error
+                </p>
+                <img src='/images/bountyarena/error.png' className='w-5 h-5' />
+              </>
             )}
           </div>
 
