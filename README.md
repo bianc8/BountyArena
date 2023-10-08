@@ -1,46 +1,24 @@
-# StarterKit
 
-A Ready to Use NextJS dapp using TalentLayer & XMTP protocols.
-All essential components to start building an amazing dapp with interoperable work and messaging
 
-## Start building in 60 seconds
+# BountyArena <> ETHRome 
 
-- Fork the code
-- Clone your new repository
+We are Web3 fanatics and developers, so why are we continuing to use a centralized platform to submit our project?
 
-- Copy .env.example file into a new .env file
-- `cp .env.example .env`
+BountyArena is a platform to manage bounties (but everything similar like grants, requests for help or others can work). An entity (user or company) can publish a bounty and devs can apply and try to win the prize.
 
-- If you are using nvm, run:
-- `nvm use`
-- Else, use the recommended node version: `18^`
+The bounty owner or the judges will launch a Snapshot proposal where the selected people (so in this case the judges) have to elect the best submission.
 
--Install the dependencies
-- `npm install`
-
--Run local server for development
-- `npm run dev`
-
-## 🛠️ TalentLayer
-
-TalentLayer is an open protocol and dev toolkit for hiring applications. You can use it to build platforms that leverage a unified decentralized backend for job posts, escrow, user profiles, and reputations.
-
-### Developer Resources
-
-**Introduction:** [Read here.](https://docs.talentlayer.org/)
-
-**Documentation:** [Read here.](https://docs.talentlayer.org/technical-guides)
-
-**XMTP & TL:** [Read here.](https://docs.talentlayer.org/technical-guides/messaging/integrating-xmtp)
-
-## 🗨 XMTP
-
-XMTP is an open protocol and dev toolkit for messaging applications. You can use it to build peer-to-peer messaging 
-
-### Developer Resources
-
-**Introduction:** [Read here.](https://xmtp.org/docs/dev-concepts/introduction)
-
-**Documentation:** [Read here.](https://xmtp.org/docs/dev-concepts/start-building)
-
-**Example DAPP Tutorial:** [Read here.](https://xmtp.org/docs/client-sdk/javascript/tutorials/build-an-xmtp-hello-world-app)
+## Want to try it on your own?
+1. Step1: clone the repo from GitHub
+2. Step2: install the dependencies
+```
+    yarn
+```
+3. Step3: create the .env file. You will find a `.env.example` that you can copy and edit with your env variables
+4. Step4: launch the application using dev mode:
+```
+    yarn dev
+```
+5. Step5: open your browser and go to `http://localhost:3000`
+   
+## Video Demo
