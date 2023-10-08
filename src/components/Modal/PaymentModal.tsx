@@ -30,7 +30,7 @@ function PaymentModal({ service, payments, isBuyer }: IPaymentModalProps) {
         className={`block ${
           (service.status === ServiceStatusEnum.Confirmed && !isBuyer) ||
           service.status === ServiceStatusEnum.Finished
-            ? 'text-green-600 bg-green-50 hover:bg-redpraha'
+            ? 'text-green-600 bg-green-50 hover:bg-[#FFAE00]'
             : 'text-zinc-600 bg-zinc-50 hover:bg-zinc-500'
         } hover:text-white rounded-xl px-5 py-2.5 text-center`}
         type='button'

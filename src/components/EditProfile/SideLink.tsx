@@ -14,11 +14,11 @@ function SideLink({
   const isDashboard = href == '/dashboard/profile/edit';
   let className = isDashboard
     ? router.asPath === href
-      ? 'text-primary-500 bg-redpraha'
+      ? 'text-black bg-[#FFAE00]'
       : ''
     : router.asPath.includes(href)
-    ? 'text-primary-500 bg-redpraha'
-    : '';
+      ? 'text-black bg-[#FFAE00]'
+      : '';
 
   className +=
     ' hover:text-muted-200 hover:bg-muted-700/50 flex items-center gap-2 rounded-lg p-3 transition-colors duration-300';
@@ -33,7 +33,7 @@ function SideLink({
       {children}
       {isCompleted && (
         <span>
-          <CheckIcon width={20} height={20} className='bg-white p-1 text-redpraha rounded-full' />
+          <CheckIcon width={20} height={20} className='bg-white p-1 text-[#FFAE00] rounded-full' />
         </span>
       )}
     </a>

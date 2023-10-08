@@ -10,7 +10,7 @@ function ContactButton({ userAddress, userHandle }: { userAddress: string; userH
       onClick={() => {
         handleMessageUser(userAddress);
       }}>
-      Contact
+      Write to {userHandle}
     </button>
   );
 }

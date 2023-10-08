@@ -10,17 +10,79 @@ export const getReviewsByService = (chainId: number, serviceId: string): Promise
         service {
           id
           status
+          buyer {
+            handle
+          }
         }
         to {
           id
           handle
         }
-        description{
+        description {
           id
           content
         }
       }
     }
     `;
+  return processRequest(chainId, query);
+};
+
+export const getReviewsByAddress = (chainId: number, address: string): Promise<any> => {
+  const query = `
+    {
+      reviews(orderBy: id, orderDirection: desc, where: {to_: {address: "${address}"}}) {
+        id
+        rating
+        createdAt
+        service {
+          id
+          status
+          buyer {
+            handle
+          }
+        }
+        to {
+          id
+          handle
+          address
+        }
+        description {
+          id
+          content
+        }
+      }
+    }
+    `;
+  console.log(query);
+  return processRequest(chainId, query);
+};
+
+export const getReviews = (chainId: number, platformId: number): Promise<any> => {
+  const query = `
+    {
+      reviews(where: {service_: {platform: "${platformId}"}}, orderBy: id, orderDirection: desc) {
+        id
+        rating
+        createdAt
+        service {
+          id
+          status
+          buyer {
+            handle
+          }
+        }
+        to {
+          id
+          handle
+        }
+        description {
+          id
+          content
+        }
+      }
+    }
+    `;
+  console.log(query);
   return processRequest(chainId, query);
 };

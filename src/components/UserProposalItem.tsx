@@ -19,7 +19,7 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
   const isBuyer = user?.id === proposal.service.buyer.id;
 
   return (
-    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
+    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
       <div className='flex flex-col items-top justify-between gap-4 w-full'>
         <div className='flex flex-col justify-start items-start gap-4'>
           <div className='flex items-center justify-start w-full  relative'>
@@ -48,9 +48,12 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
               <strong>Proposal:</strong> created by {proposal.seller.handle} the{' '}
               {formatDate(Number(proposal.createdAt) * 1000)}
             </p>
-            <p className='text-sm text-gray-400 mt-4'>
-              <strong>Message:</strong> {proposal.description?.title}
-            </p>
+            {
+              proposal.description?.title &&
+              <p className='text-sm text-gray-400 mt-4'>
+                <strong>Message:</strong> {proposal.description?.title}
+              </p>
+            }
             <p className='text-sm text-gray-400 mt-4'>
               <strong>Expiration Date:</strong> {formatDate(Number(proposal.expirationDate) * 1000)}
             </p>
@@ -62,11 +65,18 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
           </p>
           <Link
             className='text-zinc-600 bg-zinc-50 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm'
-            href={`/dashboard/services/${proposal.service.id}`}>
-            Show Gig
+            href={`/dashboard/bounties/${proposal.service.id}`}>
+            Show Bounty
           </Link>
           {isBuyer && proposal.status === ProposalStatusEnum.Pending && (
-            <button className='text-green-600 bg-green-50 hover:bg-redpraha hover:text-white px-5 py-2 rounded'>
+            <Link
+              className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'
+              href={`/dashboard/bounties/${proposal.service.id}`}>
+              Learn More and Accept
+            </Link>
+          )}
+          {isBuyer && proposal.status === ProposalStatusEnum.Pending && (
+            <button className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'>
               Validate
             </button>
           )}

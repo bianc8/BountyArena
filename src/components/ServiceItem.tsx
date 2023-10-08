@@ -9,7 +9,7 @@ function ServiceItem({ service }: { service: IService }) {
   const chainId = useChainId();
 
   return (
-    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
+    <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
       <div className='flex flex-col items-top justify-between gap-4 w-full'>
         <div className='flex flex-col justify-start items-start gap-4'>
           <div className='flex items-center justify-start'>
@@ -31,7 +31,8 @@ function ServiceItem({ service }: { service: IService }) {
 
         <div className='flex flex-row gap-4 justify-between items-center border-t border-gray-700 pt-4'>
           {service.description?.rateToken && service.description?.rateAmount && (
-            <p className='text-gray-300 font-bold line-clamp-1 max-w-[100px]'>
+            <p className='text-gray-300 font-bold line-clamp-1 max-w-[200px]'>
+              <span className='mr-1'>Prize:</span>  
               {renderTokenAmountFromConfig(
                 chainId,
                 service.description.rateToken,
@@ -40,8 +41,8 @@ function ServiceItem({ service }: { service: IService }) {
             </p>
           )}
           <Link
-            className='text-zinc-600 bg-zinc-50 hover:bg-zinc-500 hover:text-white px-4 py-1.5 rounded btn-sm'
-            href={`/dashboard/services/${service.id}`}>
+            className='px-4 py-1.5 rounded btn-sm border border-[#FFAE00] bg-black text-[#FFAE00] hover:bg-gray-700 transition ease-in-out duration-150'
+            href={`/dashboard/bounties/${service.id}`}>
             Show details
           </Link>
         </div>

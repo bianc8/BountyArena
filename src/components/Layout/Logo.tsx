@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 function Logo({ theme = 'dark' }: { theme?: 'dark' | 'light' }) {
   return (
-    <div className={`text-1xl font-bold ${theme == 'light' ? 'text-white' : 'text-redpraha'}`}>
+    <div className={`text-xl sm:text-2xl font-bold ${theme == 'light' ? 'text-white' : 'text-[#FFAE00]'}`}>
       <Link href='/' className='flex items-center'>
         <p className='-ml-2 sm:ml-0'>
-          Buidl Arena
+          BountyArena
         </p>
       </Link>
     </div>

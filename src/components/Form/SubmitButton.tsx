@@ -36,7 +36,7 @@ function SubmitButton({
           Loading...
         </button>
       ) : isConnected ? (
-        <button type='submit' className='grow px-5 py-2 rounded-xl bg-redpraha text-white'>
+        <button type='submit' className='grow px-5 py-2 rounded-xl bg-[#FFAE00] text-black' onClick={() => {console.log("test")}}>
           {label}
         </button>
       ) : (
@@ -45,7 +45,7 @@ function SubmitButton({
             openConnectModal();
           }}
           type='button'
-          className='grow px-5 py-2 rounded-xl bg-redpraha text-white hover:bg-midnight  '>
+          className='grow px-5 py-2 rounded-xl bg-[#FFAE00] text-black   hover:bg-[#191919]  '>
           {'Connect first'}
         </button>
       )}

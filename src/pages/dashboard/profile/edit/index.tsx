@@ -1,12 +1,24 @@
 import ProfileForm from '../../../../components/Form/ProfileForm';
 import Layout from '../../../../components/EditProfile/Layout';
+import UserReviews from '../../../../components/UserReviews';
+import { useContext } from 'react';
+import TalentLayerContext from '../../../../context/talentLayer';
 
 function EditProfile() {
-  return (
+  const { user: currentUser } = useContext(TalentLayerContext);
+
+  if (!currentUser) {
+    return null
+  }
+
+  return (<>
     <Layout>
       <ProfileForm />
+      <div className='my-6'>
+        <UserReviews user={currentUser} vcs={true} />
+      </div>
     </Layout>
-  );
+  </>);
 }
 
 export default EditProfile;

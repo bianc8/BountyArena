@@ -110,7 +110,7 @@ function UserIncomes({ id }: { id: string }) {
                         {payment.rateToken.symbol}
                       </td>
                       <td className=' p-2 text-center text-blue-500 border-r border-b border-gray-500'>
-                        <a target='_blank' href={`/dashboard/services/${payment.service.id}`}>
+                        <a target='_blank' href={`/dashboard/bounties/${payment.service.id}`}>
                           Service n°{payment.service.id}{' '}
                         </a>
                       </td>
@@ -135,7 +135,7 @@ function UserIncomes({ id }: { id: string }) {
                 <button
                   type='submit'
                   className={`px-5 py-2 mt-5 content-center border border-zinc-600 rounded-full text-zinc-600 
-              hover:text-white hover:bg-midnight
+              hover:text-white hover:bg-[#191919]
             `}
                   disabled={!hasMoreData}
                   onClick={() => loadMore()}>

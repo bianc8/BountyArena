@@ -2,6 +2,7 @@ import {
   BriefcaseIcon,
   ChatBubbleBottomCenterIcon,
   UserGroupIcon,
+  CheckIcon,
   UserIcon,
   PresentationChartLineIcon,
   ExclamationCircleIcon,
@@ -9,11 +10,11 @@ import {
 } from '@heroicons/react/24/outline';
 
 export const navigation = [
-  { name: 'My Dashboard', href: '/dashboard', icon: UserIcon, current: false },
+  { name: 'Dashboard', href: '/dashboard', icon: UserIcon, current: false },
   { name: 'Chat', href: '/dashboard/messaging', icon: ChatBubbleBottomCenterIcon, current: false },
-  { name: 'Bounties', href: '/dashboard/services', icon: BriefcaseIcon, current: false },
+  { name: 'Bounties', href: '/dashboard/bounties', icon: BriefcaseIcon, current: false },
   { name: 'Hackers', href: '/dashboard/talents', icon: UserGroupIcon, current: false },
-  { name: 'Write a review', href: '/dashboard/reviews', icon: UserGroupIcon, current: false },
+  { name: 'Validator', href: '/dashboard/validator', icon: CheckIcon, current: false },
 ];
 
 export const navigationAdmin = [

@@ -15,16 +15,16 @@ function SearchTalentButton(props?: { value?: string }) {
     const searchQueryRef = formElm.querySelector('input')!.value;
     if (searchQueryRef.length > 0) {
       router.push({
-        pathname: '/talents',
+        pathname: '/dashboard/talents',
         query: { search: searchQueryRef },
       });
-    } else router.push('/talents');
+    } else router.push('/dashboard/talents');
   }, []);
 
   return (
     <form onSubmit={e => handleSubmit(e)} className='flex w-full'>
-      <div className='flex bg-white py-2 px-4 sm:px-2 justify-center items-center flex-row drop-shadow-lg rounded-xl w-full'>
-        <div className='sm:px-6 flex flex-row items-center'>
+      <div className='flex py-2 px-4 sm:px-2 justify-center items-center flex-row drop-shadow-lg rounded-xl w-full'>
+        <div className='sm:px-6 flex flex-row items-center bg-white border rounded-lg'>
           <span className='text-gray-500'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -43,7 +43,7 @@ function SearchTalentButton(props?: { value?: string }) {
           <input
             className='text-gray-500 py-2 focus:ring-0 outline-none text-sm sm:text-lg border-0'
             type='text'
-            placeholder='Search by skills'
+            placeholder='Search by handle'
             onChange={e => setSearchQuery(e.target.value)}
             value={searchQuery}
           />
@@ -52,7 +52,7 @@ function SearchTalentButton(props?: { value?: string }) {
         <div className='sm:px-4 flex flex-row  sm:space-x-4 justify-between items-center'>
           <button
             type='submit'
-            className='px-5 py-2  rounded-xl hover:text-zinc-600 hover:bg-white text-white bg-midnight'>
+            className='px-5 py-2 rounded-xl hover:text-white hover:bg-[#FF5500] text-black bg-[#FFAE00] transition ease-in-out duration-150'>
             Search
           </button>
         </div>

@@ -2,7 +2,7 @@ import { ArrowSmallRightIcon } from '@heroicons/react/24/outline';
 
 function Web3mailCard() {
   return (
-    <div className='bg-midnight flex flex-col items-center rounded-2xl p-4 sm:flex-row'>
+    <div className='bg-[#191919] flex flex-col items-center rounded-2xl p-4 sm:flex-row'>
       <div className='relative h-[120px] w-[240px] shrink-0 sm:h-[175px] flex items-center'>
         <svg
           className='pointer-events-none start-3'

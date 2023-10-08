@@ -45,7 +45,7 @@ function UserAccount() {
                     style={{ marginBottom: '-3px' }}>
                     {user?.handle ? user.handle : ''}
                   </p>
-                  <p className='text-xs text-redpraha group-hover:text-gray-700'>
+                  <p className='text-xs text-[#FFAE00] group-hover:text-gray-700'>
                     {account.address && truncateAddress(account.address)}
                   </p>
                 </Menu.Button> */}
@@ -60,7 +60,7 @@ function UserAccount() {
             leave='transition ease-in duration-75'
             leaveFrom='transform opacity-100 scale-100'
             leaveTo='transform opacity-0 scale-95'>
-            <Menu.Items className='absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-xl bg-midnight py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+            <Menu.Items className='absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-xl bg-[#191919] py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
               <UserSubMenu />
             </Menu.Items>
           </Transition>

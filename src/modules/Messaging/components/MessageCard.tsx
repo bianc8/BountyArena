@@ -37,15 +37,15 @@ const MessageCard = ({ message, dateHasChanged }: IMessageCardProps) => {
           <div
             className={`py-3 px-4 text-sm ${
               isSender && message.status === ChatMessageStatus.SENT
-                ? 'ml-12 bg-[#b2c9f7] text-midnight rounded-bl-2xl rounded-tl-2xl rounded-tr-xl'
+                ? 'ml-12 bg-[#ffae00] text-midnight rounded-bl-2xl rounded-tl-2xl rounded-tr-xl'
                 : isSender && message.status === ChatMessageStatus.ERROR
                 ? 'ml-12 bg-red-600 rounded-br-2xl rounded-tl-2xl rounded-tr-xl'
                 : isSender && message.status === ChatMessageStatus.PENDING
-                ? 'ml-12 bg-gray-200 text-midnight rounded-bl-2xl rounded-tl-2xl rounded-tr-xl'
-                : 'mr-12 bg-gray-200 text-midnight rounded-br-2xl rounded-tr-2xl rounded-tl-xl'
+                ? 'ml-12 bg-[#FF5500] text-midnight rounded-bl-2xl rounded-tl-2xl rounded-tr-xl'
+                : 'mr-12 bg-[#FF5500] text-midnight rounded-br-2xl rounded-tr-2xl rounded-tl-xl'
             }
-          text-white`}>
-            <span className='pr-1 text-gray-600 text-xs w-[50px]'>
+          text-gray-400`}>
+            <span className='pr-1 text-gray-700 text-xs w-[50px]'>
               {formatDateTime(message.timestamp)}
             </span>
             {isSender && message.status === ChatMessageStatus.SENT && (
