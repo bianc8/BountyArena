@@ -226,19 +226,6 @@ function Home() {
                     className='wow fadeInUp group mx-auto mb-[60px] max-w-[310px] text-center'
                     data-wow-delay='.4s'>
                     <div className='mx-auto mb-8 flex h-[90px] w-[90px] items-center justify-center rounded-3xl bg-white bg-opacity-20 text-[#FFAE00] duration-300'>
-                      <Image src='/sponsor/talent_protocol.svg' alt="talent protocol logo" width={90} height={90} />
-                    </div>
-                    <h3 className='mb-4 text-xl font-semibold text-black  sm:text-[22px] xl:text-[26px]'>
-                      Talent Protocol
-                    </h3>
-                  </div>
-                </div>
-
-                <div className='w-full px-4 md:w-1/2 lg:w-1/3'>
-                  <div
-                    className='wow fadeInUp group mx-auto mb-[60px] max-w-[310px] text-center'
-                    data-wow-delay='.4s'>
-                    <div className='mx-auto mb-8 flex h-[90px] w-[90px] items-center justify-center rounded-3xl bg-white bg-opacity-20 text-[#FFAE00] duration-300'>
                       <Image src='/sponsor/the_graph.png' alt="the graph logo" width={90} height={90} />
                     </div>
                     <h3 className='mb-4 text-xl font-semibold text-black  sm:text-[22px] xl:text-[26px]'>
