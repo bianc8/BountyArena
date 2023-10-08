@@ -23,6 +23,23 @@ function validator() {
         </p>
       </div>
 
+      <p className='mb-8'>
+        <span className='font-bold'>Verifiable Credentials (VCs)</span> are a tamper-proof, cryptographically signed
+        credential that can be used to prove things about you, in this case reviews about your projects. VCs are signed and issued by our Decentralized Identifier 
+        and can be verified by anyone. You can store VCs wherever you want, but BountyArena wants to incentive you to store them inside your ENS domain text-records
+        so you can start building your reputation and take all information directly from there.
+      </p>
+
+      <p>
+        To prove that a credential is valid, you can paste it below and click on the <span className='font-bold'>Verification</span> button. Credential will be verified only
+        if it is correctly signed by our issuer.<br/>
+        If you want to check it manually, take care that our issuer DID is:
+      </p>
+
+      <pre className='bg-gray-500 text-white text-center w-1/2 m-auto mb-8 mt-8 p-3 rounded-lg text-lg'>
+        {process.env.NEXT_PUBLIC_DID_KEY}
+      </pre>
+
       <div className='grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-[#262424]'>
         <p className='text-xl font-medium tracking-wider'>Paste your VC below</p>
         <div className='flex justify-center items-center gap-10 flex-col'>

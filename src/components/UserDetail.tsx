@@ -4,7 +4,6 @@ import useUserById from '../hooks/useUserById';
 import PohModule from '../modules/Poh/PohModule';
 import { IUser } from '../types';
 import Loading from './Loading';
-import Stars from './Stars';
 import DelegateModal from './Modal/DelegateModal';
 import Link from 'next/link';
 
@@ -41,7 +40,6 @@ function UserDetail({ user }: { user: IUser }) {
             </div>
           </div>
         </div>
-        <Stars rating={Number(user.rating)} numReviews={user.userStats.numReceivedReviews} />
       </div>
       <div className=' border-t border-gray-700 pt-2 w-full'>
         {userDescription?.name && (
