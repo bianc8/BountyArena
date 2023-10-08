@@ -116,7 +116,7 @@ function ServiceDetail({ service }: { service: IService }) {
               <>
                 {!userProposal && (
                   <Link
-                    className='text-white bg-[#FFAE00] hover:redpraha/80 hover:text-white px-3 py-2 rounded text-sm'
+                    className='text-black bg-[#FFAE00] hover:bg-[#FF5500] hover:text-white px-3 py-2 rounded text-sm'
                     href={`/dashboard/bounties/${service.id}/application`}>
                     Submit application
                   </Link>
