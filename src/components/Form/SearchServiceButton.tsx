@@ -23,8 +23,8 @@ function SearchServiceButton(props?: { value?: string }) {
 
   return (
     <form onSubmit={e => handleSubmit(e)} className='flex w-full'>
-      <div className='flex bg-white py-2 px-4 sm:px-2 justify-center items-center flex-row drop-shadow-lg rounded-xl w-full'>
-        <div className='sm:px-6 flex flex-row items-center'>
+      <div className='flex py-2 px-4 sm:px-2 justify-center items-center flex-row drop-shadow-lg rounded-xl w-full'>
+        <div className='sm:px-6 flex flex-row items-center bg-white border rounded-lg'>
           <span className='text-gray-500'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -51,7 +51,7 @@ function SearchServiceButton(props?: { value?: string }) {
         <div className='sm:px-4 flex flex-row  sm:space-x-4 justify-between items-center'>
           <button
             type='submit'
-            className='px-5 py-2 rounded-xl hover:bg-gray-700 text-white bg-[#191919]'>
+            className='px-5 py-2 rounded-xl hover:text-white hover:bg-[#FF5500] text-black bg-[#FFAE00] transition ease-in-out duration-150'>
             Search
           </button>
         </div>

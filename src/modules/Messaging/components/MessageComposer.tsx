@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import Loading from '../../../components/Loading';
+import { send } from 'process';
 
 interface IMessageComposerProps {
   messageContent: string;
@@ -30,6 +31,12 @@ const MessageComposer = ({
       )
     );
   };
+  
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      sendNewMessage();
+    }
+  }
 
   return (
     <>
@@ -41,6 +48,7 @@ const MessageComposer = ({
           placeholder='Write a message'
           disabled={!peerUserExistsOnXMTP || !peerUserExistsOnTalentLayer}
           value={messageContent}
+          onKeyDown={handleKeyDown} 
         />
         {sendingPending && <Loading />}
         {renderSendButton(peerUserExistsOnXMTP, sendingPending)}

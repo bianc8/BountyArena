@@ -38,7 +38,9 @@ function ShowProposalModal({ proposal }: { proposal: IProposal }) {
       <div
         className={`${
           !show ? 'hidden' : ''
-        } overflow-y-auto overflow-x-hidden fixed top-[15px] right-0 left-0 z-50 w-full md:inset-0 h-modal h-[90vh] bg-black/75 flex flex-col items-center justify-center`}>
+        } overflow-y-auto overflow-x-hidden fixed top-[15px] right-0 left-0 z-50 w-full md:inset-0 h-modal bg-black/75 flex flex-col items-center justify-center`}
+        style={{height: '-webkit-fill-available'}}  
+      >
         <div className='relative p-4 w-full max-w-2xl h-auto'>
           <div className='relative bg-white rounded-xl shadow '>
             <div className='flex justify-between items-start p-4 rounded-t border-b '>

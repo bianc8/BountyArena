@@ -41,7 +41,7 @@ function ServiceItem({ service }: { service: IService }) {
             </p>
           )}
           <Link
-            className='text-zinc-600 bg-zinc-50 hover:bg-zinc-500 hover:text-white px-4 py-1.5 rounded btn-sm'
+            className='px-4 py-1.5 rounded btn-sm border border-[#FFAE00] bg-black text-[#FFAE00] hover:bg-gray-700 transition ease-in-out duration-150'
             href={`/dashboard/bounties/${service.id}`}>
             Show details
           </Link>

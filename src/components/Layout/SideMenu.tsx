@@ -13,10 +13,14 @@ function SideMenu() {
       {navigation.map(item => (
         <SideLink key={item.name} href={item.href}>
           <item.icon
-            className={`mr-3 h-5 w-5 flex-shrink-0 text-black \
-              ${router.asPath.endsWith(item.href)
-                ? 'bg-[#FFAE00] text-black'
-                : 'text-white'}`}
+            className={`mr-3 h-5 w-5 flex-shrink-0 \
+              ${item.href == '/dashboard'
+                ? router.asPath === item.href
+                  ? 'text-black bg-[#FFAE00]'
+                  : ''
+                : router.asPath.includes(item.href)
+                  ? 'text-black bg-[#FFAE00]'
+                  : ''}`}
             aria-hidden='true' />
           {item.name}
         </SideLink>

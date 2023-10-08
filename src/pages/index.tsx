@@ -14,7 +14,7 @@ function Home() {
             <div className='flex items-center justify-end'>
               <a
                 href='/dashboard'
-                className='rounded-md bg-[#FFAE00] py-[6px] px-[12px] xl:py-[10px] xl:px-[30px] text-base font-medium text-white hover:bg-opacity-90'>
+                className='rounded-md bg-[#FFAE00] py-[6px] px-[12px] xl:py-[10px] xl:px-[30px] text-base font-bold text-white hover:bg-opacity-90'>
                   Launch dApp
               </a>
             </div>
@@ -46,7 +46,7 @@ function Home() {
                       href='https://github.com/TalentLayer-Labs/starter-kit'
                       className='mr-6 mb-6 inline-flex h-[60px] items-center rounded-lg bg-black py-[14px] px-[30px] text-white hover:bg-opacity-90'>
                       <span className='mr-[18px] border-r border-stroke border-opacity-40 pr-[18px] leading-relaxed '>
-                        Fork Now
+                        View Repo
                       </span>
                       <span>
                         <svg
@@ -62,7 +62,7 @@ function Home() {
                       </span>
                     </a>
 
-                    {/* <a
+                    <a
                       href='javascript:void(0)'
                       className='glightbox mb-6 inline-flex items-center py-4 text-black hover:text-primary '>
                       <span className='mr-[12px] flex h-[56px] w-[56px] items-center justify-center rounded-full border-2 border-current'>
@@ -79,10 +79,10 @@ function Home() {
                         </svg>
                       </span>
                       <span className='text-base font-medium'>
-                        <span className='block text-sm'> Watch Demo </span>
+                        <span className='block text-sm'>Watch Demo </span>
                         See how it works
                       </span>
-                    </a> */}
+                    </a>
                   </div>
                 </div>
               </div>

@@ -2,7 +2,7 @@ import SearchServiceButton from '../Form/SearchServiceButton';
 
 function SearchService() {
   return (
-    <div className='bg-gray-50'>
+    <div className=''>
       <div className='max-w-7xl mx-auto text-gray-900 px-4'>
         <div className='flex justify-center items-center gap-10 flex-col py-20'>
           <p className='text-5xl sm:text-7xl font-medium tracking-wider max-w-lg text-center'>

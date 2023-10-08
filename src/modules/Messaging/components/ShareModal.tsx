@@ -38,7 +38,7 @@ function ShareModal() {
           !show ? 'hidden' : ''
         } overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal h-full bg-black/90 flex flex-col items-center justify-center`}>
         <div className='relative w-full max-w-2xl h-auto'>
-          <div className='relative bg-[#262424]shadow '>
+          <div className='relative bg-endnight shadow '>
             <div className='fixed top-0 right-0'>
               <button
                 onClick={() => setShow(false)}
@@ -73,7 +73,7 @@ function ShareModal() {
               <p className='mt-10'>or</p>
               <a
                 onClick={handleCopyClick}
-                className='flex p-3 bg-[#262424] border-endnight rounded-xl justify-between mt-10 text-[#FFAE00]'>
+                className='flex p-3 bg-[#262424] hover:bg-[#260000] border-endnight rounded-xl justify-between mt-10 text-[#FFAE00] cursor-pointer'>
                 Copy a share link
                 <ClipboardDocumentIcon className='ml-2 h-5 w-5' />
               </a>

@@ -23,10 +23,14 @@ function SideMenu() {
           }>
           <item.icon
             width={20} height={20}
-            className={`mr-3 h-5 w-5 flex-shrink-0 text-black \
-            ${router.asPath === item.href || router.asPath.endsWith(item.href)
-              ? 'bg-[#FFAE00] text-black'
-              : 'text-white'}`}
+            className={`mr-3 h-5 w-5 flex-shrink-0 \
+            ${item.href == '/dashboard/profile/edit' ?
+              router.asPath === item.href
+                ? 'text-black bg-[#FFAE00]'
+                : ''
+              : router.asPath.includes(item.href)
+                ? 'text-black bg-[#FFAE00]'
+                : ''}`}
           />
           <span className='grow'>{item.name}</span>
         </SideLink>

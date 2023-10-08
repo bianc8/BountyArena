@@ -17,8 +17,8 @@ function SideLink({
       ? 'text-black bg-[#FFAE00]'
       : ''
     : router.asPath.includes(href)
-    ? 'text-black bg-[#FFAE00]'
-    : '';
+      ? 'text-black bg-[#FFAE00]'
+      : '';
 
   className +=
     ' hover:text-muted-200 hover:bg-muted-700/50 flex items-center gap-2 rounded-lg p-3 transition-colors duration-300';
