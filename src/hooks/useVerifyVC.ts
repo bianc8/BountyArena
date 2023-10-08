@@ -23,7 +23,7 @@ const getUniversalResolver = async (
     return resolve
 }
 
-const useVerifyVC = async (vc: string) => {
+const useVerifyVC = async (vc: string): Promise<didJWT.JWTVerified> => {
 
     try {
         const universalResolver = await getUniversalResolver();
