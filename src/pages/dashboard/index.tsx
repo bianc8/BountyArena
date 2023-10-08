@@ -22,7 +22,7 @@ function Dashboard() {
       <div className='-mx-6 -mt-6 sm:mx-0 sm:mt-0'>
         <div className='flex py-2 px-6 sm:px-0 items-center border-b w-full border-gray-700 mb-8'>
           <p className='text-2xl font-medium flex-1'>
-            Your <span className='text-gray-100 ml-1'> dashboard </span>
+            Your <span className='text-gray-100 ml-1'>Dashboard</span>
           </p>
           <Link
             href={`/dashboard/profile/edit`}

@@ -7,11 +7,11 @@ export default function Document() {
         <meta
           name='viewport'
           content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'></meta>
-        <meta name='application-name' content='StarterKit' />
+        <meta name='application-name' content='BountyArena' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
-        <meta name='apple-mobile-web-app-title' content='StarterKit' />
-        <meta name='description' content='Best StarterKit in the world' />
+        <meta name='apple-mobile-web-app-title' content='BountyArena' />
+        <meta name='description' content='Best BountyArena in the world' />
         <meta name='format-detection' content='telephone=no' />
         <meta name='mobile-web-app-capable' content='yes' />
         <meta name='msapplication-config' content='/images/browserconfig.xml' />
@@ -24,11 +24,11 @@ export default function Document() {
         <link rel='apple-touch-icon' sizes='180x180' href='/images/touch-icon-iphone-retina.png' />
         <link rel='apple-touch-icon' sizes='167x167' href='/images/touch-icon-ipad-retina.png' />
 
-        <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-        <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
+        <link rel='icon' type='image/png' sizes='32x32' href='/images/favicon-32x32.png' />
+        <link rel='icon' type='image/png' sizes='16x16' href='/images/favicon-16x16.png' />
         <link rel='manifest' href='/manifest.json' />
         <link rel='mask-icon' href='/images/safari-pinned-tab.svg' color='#000000' />
-        <link rel='shortcut icon' href='/favicon.ico' />
+        <link rel='shortcut icon' href='/images/favicon.ico' />
       </Head>
       <body className='text-white bg-[#191919]'>
         <Main />

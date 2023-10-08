@@ -31,7 +31,7 @@ function UserItem({ user }: { user: IUser }) {
             />
             <div className='flex flex-col'>
               <p className='text-gray-100 font-medium break-all'>{user.handle}</p>
-              <p className='text-md text-gray-500'>{userDescription?.title || '-'}</p>
+              <p className='text-md text-gray-500'>{userDescription?.title || ''}</p>
             </div>
           </div>
         </div>

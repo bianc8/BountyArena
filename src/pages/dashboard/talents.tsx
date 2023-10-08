@@ -61,11 +61,6 @@ function Talents() {
           <Loading />
         </div>
       )}
-      {!hasMoreData && (
-        <div className='flex justify-center items-center gap-10 flex-col pb-5 mt-5'>
-          <p>No more Users...</p>
-        </div>
-      )}
     </div>
   );
 }

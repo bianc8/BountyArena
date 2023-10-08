@@ -13,8 +13,6 @@ function validator() {
     });
   };
 
-  console.log('verificationResult', verificationResult);
-
   return (
     <div className='max-w-7xl mx-auto text-gray-200 sm:px-4 lg:px-0'>
       <div className='-mx-6 -mt-6 sm:mx-0 sm:mt-0'>
