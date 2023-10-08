@@ -219,6 +219,7 @@ export enum ProposalStatusEnum {
   Rejected = 'Rejected',
   Ranking = 'Ranking',
   VoteOngoing = 'VoteOngoing',
+  VoteFinished = 'VoteFinished',
 }
 
 export type IProposalDetails = {

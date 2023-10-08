@@ -86,16 +86,15 @@ function ProposalItem({
           </div>
         </div>
         <div className='flex flex-row gap-4 justify-between items-center border-t border-gray-700 pt-4'>
-          {account && (isBuyer || isJudge) && proposal.status === ProposalStatusEnum.Pending && (
+          {account && (isBuyer || isJudge) && (
             <ShowProposalModal proposal={proposal} />
           )}
-          {account && isBuyer && proposal.status === ProposalStatusEnum.Validated && (
+          {/* show Validate button IFF Snapshot vote is finished (=== .Ranking) */}
+          {account && isBuyer && proposal.status === ProposalStatusEnum.Ranking && (index || 4) <= 3 && (
             <ValidateProposalModal proposal={proposal} account={account} />
           )}
           {
             handleCheckboxChange && isCheckable && (
-              // style for the checkbox, colored in yellow, black arrow
-              // [type='checkbox']:checked becomes black arrow
               <div className='flex flex-row gap-4 justify-between items-center'>
                 <div>
                   Select to vote
