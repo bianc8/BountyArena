@@ -1,7 +1,21 @@
+import { useState } from "react";
+import useVerifyVC from "../../hooks/useVerifyVC";
+import { Field } from "formik";
 
 
 
 function validator() {
+    const [vc, setVc] = useState('')
+    const [verificationResult, setVerificationResult] = useState('')
+
+    const handleVerification = () => {
+        useVerifyVC(vc).then((result) => {
+            setVerificationResult(result);
+        });
+    }
+
+    console.log('verificationResult', verificationResult)
+
     return (
         <div className='max-w-7xl mx-auto text-gray-200 sm:px-4 lg:px-0'>
             <div className='-mx-6 -mt-6 sm:mx-0 sm:mt-0'>
@@ -10,20 +24,49 @@ function validator() {
                 </p>
             </div>
 
-            <div>
-                <p className='text-xl font-medium tracking-wider mb-8'>
+            <div className="grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-[#262424]">
+                <p className='text-xl font-medium tracking-wider'>
                     Paste your VC below
                 </p>
-                <div className='flex justify-center items-center gap-10 flex-col pb-5'>
+                <div className='flex justify-center items-center gap-10 flex-col'>
                     <input
                         className='w-full px-5 py-2 mt-5 content-center border border-zinc-600 rounded-full text-zinc-600 
                         hover:text-white hover:bg-[#191919]
                         '
                         type='text'
                         placeholder='Paste your VC here'
+                        onChange={(e) => setVc(e.target.value)}
                     />
                 </div>
+                <button
+                    type='submit'
+                    className={`px-5 py-2 content-center border border-zinc-600 rounded-full text-zinc-600 
+                    hover:text-white hover:bg-[#191919]
+                    `}
+                    onClick={handleVerification}
+                >
+                    Verification
+                </button>
             </div>
+
+            {
+                verificationResult &&
+                    <div className="grid grid-cols-1 gap-6 border border-gray-700 rounded-xl p-6 bg-[#262424] mt-4">
+                        <p className='text-xl font-medium tracking-wider mb-4'>
+                            Verification Result
+                        </p>
+                        
+                        <textarea
+                            className='mb-1 block w-full rounded-xl border border-gray-700 bg-[#191919] shadow-sm focus:ring-opacity-50 min-h-screen'
+                            value={
+                                verificationResult ? 
+                                    JSON.stringify(verificationResult, null, 2)
+                                :
+                                    undefined
+                            }
+                        />
+                    </div>
+            }   
         </div>
     )
 }

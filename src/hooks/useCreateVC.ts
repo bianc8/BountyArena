@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { IReview } from "../types"
 import * as didJWT from 'did-jwt';
 import * as u8a from 'uint8arrays';
