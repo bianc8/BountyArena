@@ -61,7 +61,7 @@ function ServiceDetail({ service }: { service: IService }) {
   // ideally, this is true IFF bounty.deadline < now
   const isBountyExpired = true;
   // this should depend on the snapshot proposal (snapshotProposal.end)
-  const isSnapshotExpired = (snapshotProposal?.end || 0) < Math.floor(Date.now() / 1000) || true
+  const isSnapshotExpired = (snapshotProposal?.end || 0) < Math.floor(Date.now() / 1000) || true;
 
   const judges = [
     "0x162A2d9A85544d7EB4bc1DEaD0BcBf3F505b903b",
@@ -221,6 +221,7 @@ function ServiceDetail({ service }: { service: IService }) {
 
   console.log(snapshotProposal)
   console.log(snapshotVotes)
+  console.log(service)
 
   const snapshotProposalStatus = 
     proposals.length === 0 && "Waiting for proposals" ||

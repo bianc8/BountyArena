@@ -141,7 +141,7 @@ function ProfileForm({ callback }: { callback?: () => void }) {
         <Form>
           <div className='grid grid-cols-1 gap-6'>
             <label className='block'>
-              <span className='text-gray-100'>Title</span>
+              <span className='text-gray-100'>Handle</span>
               <Field
                 type='text'
                 id='title'

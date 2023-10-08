@@ -38,8 +38,8 @@ const mumbai: Config = {
       name: 'Matic',
       decimals: 18,
     },
-    '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747': {
-      address: '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747',
+    '0xe9dce89b076ba6107bb64ef30678efec11939234': {
+      address: '0xe9dce89b076ba6107bb64ef30678efec11939234',
       symbol: 'USDC',
       name: 'USDC Stablecoin',
       decimals: 6,

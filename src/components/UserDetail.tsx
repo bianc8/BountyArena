@@ -41,27 +41,37 @@ function UserDetail({ user }: { user: IUser }) {
           </div>
         </div>
       </div>
-      <div className=' border-t border-gray-700 pt-2 w-full'>
-        {userDescription?.name && (
-          <p className='text-sm text-gray-400 mt-4'>
-            <strong>Name:</strong> {userDescription?.name}
-          </p>
-        )}
-        <p className='text-sm text-gray-400 mt-4'>
-          <strong>Skills:</strong> {userDescription?.skills_raw}
-        </p>
-        <p className='text-sm text-gray-400 mt-4'>
-          <strong>About:</strong> {userDescription?.about}
-        </p>
-        {userDescription?.role && (
-          <p className='text-sm text-gray-400 mt-4'>
-            <strong>Role:</strong> {userDescription?.role}
-          </p>
-        )}
-      </div>
+      
+      {
+        userDescription &&
+        <div className='border-t border-gray-700 pt-2 w-full'>
+          {userDescription?.name && (
+            <p className='text-sm text-gray-400 mt-4'>
+              <strong>Name:</strong> {userDescription?.name}
+            </p>
+          )}
+          {
+            userDescription?.skills_raw &&
+            <p className='text-sm text-gray-400 mt-4'>
+              <strong>Skills:</strong> {userDescription?.skills_raw}
+            </p>
+          }
+          {
+            userDescription?.about &&
+            <p className='text-sm text-gray-400 mt-4'>
+              <strong>About:</strong> {userDescription?.about}
+            </p>
+          }
+          {userDescription?.role && (
+            <p className='text-sm text-gray-400 mt-4'>
+              <strong>Role:</strong> {userDescription?.role}
+            </p>
+          )}
+        </div>
+      }
 
       {currentUser?.id === user.id && (
-        <div className=' border-t border-gray-700 pt-4 w-full mt-4'>
+        <div className='border-t border-gray-700 pt-4 w-full mt-4'>
           <div className='flex flex-row gap-4 justify-end items-center'>
             <Link
               className='px-3 py-2 rounded text-sm border border-[#FFAE00] text-[#FFAE00] hover:bg-gray-700 transition ease-in-out duration-150'
