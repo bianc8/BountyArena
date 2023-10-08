@@ -47,10 +47,6 @@ function Bounties() {
         </p>
       )}
 
-      <div className='flex justify-center items-center gap-10 flex-col pb-5'>
-        <SearchServiceButton value={searchQuery} />
-      </div>
-
       <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
         {services.map((service: IService, i: number) => {
           return <ServiceItem service={service} key={i} />;

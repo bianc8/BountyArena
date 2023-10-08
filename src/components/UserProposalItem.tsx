@@ -48,9 +48,12 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
               <strong>Proposal:</strong> created by {proposal.seller.handle} the{' '}
               {formatDate(Number(proposal.createdAt) * 1000)}
             </p>
-            <p className='text-sm text-gray-400 mt-4'>
-              <strong>Message:</strong> {proposal.description?.title}
-            </p>
+            {
+              proposal.description?.title &&
+              <p className='text-sm text-gray-400 mt-4'>
+                <strong>Message:</strong> {proposal.description?.title}
+              </p>
+            }
             <p className='text-sm text-gray-400 mt-4'>
               <strong>Expiration Date:</strong> {formatDate(Number(proposal.expirationDate) * 1000)}
             </p>

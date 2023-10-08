@@ -3,11 +3,11 @@ import { useContext } from 'react';
 import TalentLayerContext from '../context/talentLayer';
 import useServiceById from '../hooks/useServiceById';
 import { IProposal, ProposalStatusEnum, ServiceStatusEnum } from '../types';
-import { renderTokenAmount } from '../utils/conversion';
 import { formatDate } from '../utils/dates';
 import ValidateProposalModal from './Modal/ValidateProposalModal';
 import ShowProposalModal from './Modal/ShowProposalModal';
 import Image from 'next/image';
+import { TrophyIcon } from '@heroicons/react/24/solid';
 
 function ProposalItem({ 
   proposal, index, isCheckable, checked, handleCheckboxChange
@@ -63,9 +63,14 @@ function ProposalItem({
               proposal.status === ProposalStatusEnum.Ranking || 
               proposal.status === ProposalStatusEnum.VoteOngoing 
             ) && (
-              <span className='w-[2em] h-[2em] absolute right-[-25px] top-[-25px] flex justify-center rounded-full bg-[#ffae00] font-bold px-2.5 py-1 text-md text-zinc-800'>
-                {index}
-              </span>
+              index === 1 ?
+                <span className="w-[2.5em] h-[2.5em] absolute right-[-25px] top-[-25px] flex justify-center rounded-full bg-[#ffae00] font-bold px-2.5 py-1 text-md text-black">
+                  <TrophyIcon />
+                </span>
+              :
+                <span className="w-[2em] h-[2em] absolute right-[-25px] top-[-25px] flex justify-center rounded-full bg-[#ffae00] font-bold px-2.5 py-1 text-md text-black">
+                  {index}
+                </span>
             )}
           </div>
 
@@ -90,7 +95,7 @@ function ProposalItem({
             <ShowProposalModal proposal={proposal} />
           )}
           {/* show Validate button IFF Snapshot vote is finished (=== .Ranking) */}
-          {account && isBuyer && proposal.status === ProposalStatusEnum.Ranking && (index || 4) <= 3 && (
+          {account && isBuyer && proposal.status === ProposalStatusEnum.Ranking && index === 1 && (
             <ValidateProposalModal proposal={proposal} account={account} />
           )}
           {

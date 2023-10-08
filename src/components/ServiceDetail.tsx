@@ -323,7 +323,7 @@ function ServiceDetail({ service }: { service: IService }) {
               </div>
               {service.description?.rateToken && service.description?.rateAmount && (
                 <p className='text-md mt-4'>
-                  <strong className='text-gray-400'>Budget:</strong>{' '}
+                  <strong className='text-gray-400'>Prize:</strong>{' '}
                   {renderTokenAmountFromConfig(
                     chainId,
                     service.description.rateToken,
@@ -331,18 +331,21 @@ function ServiceDetail({ service }: { service: IService }) {
                   )}
                 </p>
               )}
-              <p className='text-md mt-4'>
-                <strong className='text-gray-400'>Keywords:</strong>{' '}
-                {service.description?.keywords_raw?.split(',').map((keyword, i) => (
-                  <span
-                    key={i}
-                    className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2'>
-                    {keyword}
-                  </span>
-                )) || 
-                  'none'
-                }
-              </p>
+              { 
+                service.description?.keywords_raw &&
+                <p className='text-md mt-4'>
+                  <strong className='text-gray-400'>Keywords:</strong>{' '}
+                  {service.description?.keywords_raw?.split(',').map((keyword, i) => (
+                    <span
+                      key={i}
+                      className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2'>
+                      {keyword}
+                    </span>
+                  )) || 
+                    'none'
+                  }
+                </p>
+              }
             </div>
           </div>
 
@@ -378,7 +381,7 @@ function ServiceDetail({ service }: { service: IService }) {
       </div>
 
       {
-        (!isBuyer && !isJudge) && (
+        (!isBuyer && !isJudge) && snapshotProposal?.id && (
         <div className='flex flex-col gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424] mt-7'>
           <div className='flex flex-row gap-2 items-center'>
             <div className='flex items-center justify-start relative'>
