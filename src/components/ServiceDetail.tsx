@@ -63,6 +63,14 @@ function ServiceDetail({ service }: { service: IService }) {
   // this should depend on the snapshot proposal (snapshotProposal.end)
   const isSnapshotExpired = false;
 
+  const judges = [
+    "0x162A2d9A85544d7EB4bc1DEaD0BcBf3F505b903b",
+    "0x92Fb4FC6C86669A6F33E2D5023CDc3cfcA22aB9c",
+    "0xE27527c537166e4A8Bc40ED629C19c07279E1DD1"
+  ]
+
+  const isJudge = judges.includes(account?.address || "");
+
   const queryGetProposalByTitle =  (title: string | undefined) => {
     return `
       {
@@ -185,9 +193,12 @@ function ServiceDetail({ service }: { service: IService }) {
 
   const castSnapshotVote = async () => {
     // we need an array for choices
+    // we have to list the indexes of the choices
+    // the index refers to the index of the choice in the snapshotProposal.choices array
     let choices: number[] = [];
-    proposals.forEach((proposal, index) => {
-      if (checkedItems.includes(proposal.seller.handle)) {
+    checkedItems.forEach((handle) => {
+      const index = snapshotProposal?.choices.findIndex((choice) => choice === handle);
+      if (index !== undefined && index !== -1) {
         choices.push(index+1);
       }
     })
@@ -244,6 +255,8 @@ function ServiceDetail({ service }: { service: IService }) {
   };
 
   const userAlreadyVoted = snapshotVotes.find((vote) => vote.voter === account?.address);
+  const votedByUserAsIndex = snapshotVotes.find((vote) => vote.voter === account?.address)?.choice;
+  const votedByUserAsHandles = votedByUserAsIndex?.map((index) => snapshotProposal?.choices[index-1]);
 
   useEffect(() => {
     const getProposal = async () => {
@@ -334,7 +347,7 @@ function ServiceDetail({ service }: { service: IService }) {
           </div>
 
           <div className='flex flex-row gap-4 items-center border-t border-gray-700 pt-4'>
-            {!isBuyer && service.status == ServiceStatusEnum.Opened && (
+            {!isBuyer && !isJudge && service.status == ServiceStatusEnum.Opened && (
               <>
                 {!userProposal && (
                   <Link
@@ -364,6 +377,80 @@ function ServiceDetail({ service }: { service: IService }) {
         </div>
       </div>
 
+      {
+        (!isBuyer && !isJudge) && (
+        <div className='flex flex-col gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424] mt-7'>
+          <div className='flex flex-row gap-2 items-center'>
+            <div className='flex items-center justify-start relative'>
+              Snapshot Proposal:
+            </div>
+            <a className='underline text-[#ffae00] hover:text-[#ff5500]'
+              target='_blank' href={`https://demo.snapshot.org/#/${snapshotSpace}/proposal/${snapshotProposal?.id}`}
+            >
+              {snapshotProposal?.id}
+            </a>
+          </div>
+        </div>
+      )}
+
+      {
+        (isBuyer || isJudge) && (
+        <div className='flex flex-col gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424] mt-7'>
+          <div className='flex flex-row items-top gap-4 w-full justify-between min-h-[2.5em]'>
+            <div className='flex flex-row gap-2 items-center'>
+              <div className='flex items-center justify-start relative'>
+                Voting Status:
+              </div>
+              <span className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700'>
+                {snapshotProposalStatus}
+              </span>
+            </div>
+            {
+              proposals.length > 0 && isBountyExpired && !snapshotProposal && (
+                <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
+                  onClick={() => createSnapshotProposal()}
+                >
+                  Create Snapshot Proposal
+                </button>
+              )
+            }
+            {
+              snapshotProposalStatus === "In progress" && checkedItems.length > 0 && (
+                <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-[2em] py-[0.5em] rounded text-sm ease-in-out duration-150'
+                  onClick={() => castSnapshotVote()}
+                >
+                  Vote
+                </button>
+              )
+            }
+          </div>
+          {
+            snapshotProposal?.id && (
+            <div className='flex flex-row gap-2 items-center mt-3'>
+              <div className='flex items-center justify-start relative'>
+                Snapshot Proposal:
+              </div>
+              <a className='underline text-[#ffae00] hover:text-[#ff5500]'
+                target='_blank' href={`https://demo.snapshot.org/#/${snapshotSpace}/proposal/${snapshotProposal?.id}`}
+              >
+                {snapshotProposal?.id}
+              </a>
+            </div>
+          )}
+          {
+            userAlreadyVoted && (
+            <div className='flex flex-row gap-2 items-center mt-3'>
+              <div className='flex items-center justify-start relative'>
+                You voted for:
+              </div>
+              <span className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700'>
+                {votedByUserAsHandles?.join(", ")}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
       {(isBuyer || isSeller) && reviews.length > 0 && (
         <div className='flex flex-col gap-4 mt-4'>
           <p className='text-gray-900 font-bold'>Reviews:</p>
@@ -380,46 +467,11 @@ function ServiceDetail({ service }: { service: IService }) {
         </div>
       )}
 
-      {
-        isBuyer && (
-          <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424] mt-7'>
-            <div className='flex flex-row items-top gap-4 w-full justify-between'>
-              <div className='flex flex-row gap-2 items-center'>
-                <div className='flex items-center justify-start relative'>
-                  Voting Status:
-                </div>
-                <span className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700'>
-                  {snapshotProposalStatus}
-                </span>
-              </div>
-              {
-                proposals.length > 0 && isBountyExpired && !snapshotProposal && (
-                  <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
-                    onClick={() => createSnapshotProposal()}
-                  >
-                    Create Snapshot Proposal
-                  </button>
-                )
-              }
-              {
-                snapshotProposalStatus === "In progress" && checkedItems.length > 0 && (
-                  <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
-                    onClick={() => castSnapshotVote()}
-                  >
-                    Vote
-                  </button>
-                )
-              }
-            </div>
-          </div>
-        )
-      }
-
-      {isBuyer && (
+      {(isBuyer || isJudge) && (
         <>
           {proposals.length > 0 ? (
             <>
-              <p className='font-bold mt-8 mb-4'>
+              <p className='font-bold mt-8 mb-4 text-xl'>
                 {
                   showRanking ?
                     "Ranking"

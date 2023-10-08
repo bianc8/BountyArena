@@ -27,6 +27,14 @@ function ProposalItem({
 
   const isBuyer = user?.id === proposal.service.buyer.id;
 
+  const judges = [
+    "0x162A2d9A85544d7EB4bc1DEaD0BcBf3F505b903b",
+    "0x92Fb4FC6C86669A6F33E2D5023CDc3cfcA22aB9c",
+    "0xE27527c537166e4A8Bc40ED629C19c07279E1DD1"
+  ]
+
+  const isJudge = judges.includes(account?.address as string)
+
   return (
     <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
       <div className='flex flex-col items-top justify-between gap-4 w-full'>
@@ -51,16 +59,14 @@ function ProposalItem({
               </p>
             </div>
 
-            <span className='absolute right-[-25px] top-[-25px] inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-800'>
-              {
-                proposal.status === ProposalStatusEnum.Ranking || 
-                proposal.status === ProposalStatusEnum.VoteOngoing 
-                ? 
-                  index
-                :
-                  proposal.status
-              }
-            </span>
+            {(
+              proposal.status === ProposalStatusEnum.Ranking || 
+              proposal.status === ProposalStatusEnum.VoteOngoing 
+            ) && (
+              <span className='w-[2em] h-[2em] absolute right-[-25px] top-[-25px] flex justify-center rounded-full bg-[#ffae00] font-bold px-2.5 py-1 text-md text-zinc-800'>
+                {index}
+              </span>
+            )}
           </div>
 
           <div className=' border-t border-gray-700 w-full'>
@@ -80,10 +86,7 @@ function ProposalItem({
           </div>
         </div>
         <div className='flex flex-row gap-4 justify-between items-center border-t border-gray-700 pt-4'>
-          <p className='text-gray-400 font-bold line-clamp-1 flex-1'>
-            {renderTokenAmount(proposal.rateToken, proposal.rateAmount)}
-          </p>
-          {account && isBuyer && proposal.status === ProposalStatusEnum.Pending && (
+          {account && (isBuyer || isJudge) && proposal.status === ProposalStatusEnum.Pending && (
             <ShowProposalModal proposal={proposal} />
           )}
           {account && isBuyer && proposal.status === ProposalStatusEnum.Validated && (
@@ -91,12 +94,21 @@ function ProposalItem({
           )}
           {
             handleCheckboxChange && isCheckable && (
-              <input type='checkbox' checked={checked} onChange={() => handleCheckboxChange(proposal.seller.handle)} />
+              // style for the checkbox, colored in yellow, black arrow
+              // [type='checkbox']:checked becomes black arrow
+              <div className='flex flex-row gap-4 justify-between items-center'>
+                <div>
+                  Select to vote
+                </div>
+                <input className='w-5 h-5 text-yellow-400 border border-gray-700 rounded-full cursor-pointer'
+                  type='checkbox' checked={checked} onChange={() => handleCheckboxChange(proposal.seller.handle)}
+                />
+              </div>
             )
           }
         </div>
         {account &&
-          !isBuyer &&
+          !isBuyer && !isJudge &&
           proposal.status === ProposalStatusEnum.Pending &&
           service.status === ServiceStatusEnum.Opened && (
             <div className='flex flex-row gap-4 items-center border-t border-gray-700 pt-4'>
