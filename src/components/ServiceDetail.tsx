@@ -40,11 +40,13 @@ function ServiceDetail({ service }: { service: IService }) {
   const validatedProposal = proposals.find(proposal => {
     return proposal.status === ProposalStatusEnum.Validated;
   });
+  const signer = useEthersSigner()
 
   const [snapshotProposal, setSnapshotProposal] = useState<ISnapshotProposal | null>(null);
   const [snapshotVotes, setSnapshotVotes] = useState<IVote[]>([]);
   const [proposalCreated, setProposalCreated] = useState<boolean>(false);
   const [voteCasted, setVoteCasted] = useState<boolean>(false);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
 
   //
   // SNAPSHOT VARS
@@ -153,22 +155,6 @@ function ServiceDetail({ service }: { service: IService }) {
     return data as IVote[];
   }
 
-  useEffect(() => {
-    const getProposal = async () => {
-      const proposal = await getSnapshotProposal(queryGetProposalByTitle(bountyTitle));
-      setSnapshotProposal(proposal);
-      if (proposal) {
-        const votes = await getSnapshotVotes(queryGetVotesByProposalId(proposal.id));
-        setSnapshotVotes(votes);
-      } else {
-        setSnapshotVotes([]);
-      }
-    }
-    getProposal();
-  }, [bountyTitle, proposalCreated, voteCasted]);
-
-  const signer = useEthersSigner()
-
   const createSnapshotProposal = async () => {
     const blockNumber = await ethersProvider.getBlockNumber()
     const startTimestamp = Math.floor(Date.now() / 1000);
@@ -249,8 +235,6 @@ function ServiceDetail({ service }: { service: IService }) {
     })
   }
 
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
-
   const handleCheckboxChange = (handle: string) => {
     if (checkedItems.includes(handle)) {
       setCheckedItems(checkedItems.filter((item) => item !== handle));
@@ -260,6 +244,20 @@ function ServiceDetail({ service }: { service: IService }) {
   };
 
   const userAlreadyVoted = snapshotVotes.find((vote) => vote.voter === account?.address);
+
+  useEffect(() => {
+    const getProposal = async () => {
+      const proposal = await getSnapshotProposal(queryGetProposalByTitle(bountyTitle));
+      setSnapshotProposal(proposal);
+      if (proposal) {
+        const votes = await getSnapshotVotes(queryGetVotesByProposalId(proposal.id));
+        setSnapshotVotes(votes);
+      } else {
+        setSnapshotVotes([]);
+      }
+    }
+    getProposal();
+  }, [bountyTitle, proposalCreated, voteCasted]);
 
   return (
     <>
@@ -396,7 +394,7 @@ function ServiceDetail({ service }: { service: IService }) {
               </div>
               {
                 proposals.length > 0 && isBountyExpired && !snapshotProposal && (
-                  <button className='text-md text-gray-400 bg-zinc-600 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm'
+                  <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
                     onClick={() => createSnapshotProposal()}
                   >
                     Create Snapshot Proposal
@@ -405,7 +403,7 @@ function ServiceDetail({ service }: { service: IService }) {
               }
               {
                 snapshotProposalStatus === "In progress" && checkedItems.length > 0 && (
-                  <button className='text-md text-gray-400 bg-zinc-600 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm'
+                  <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
                     onClick={() => castSnapshotVote()}
                   >
                     Vote
@@ -421,10 +419,15 @@ function ServiceDetail({ service }: { service: IService }) {
         <>
           {proposals.length > 0 ? (
             <>
-              <p className='text-gray-900 font-bold mt-2 mb-4'>
-                {service.status === ServiceStatusEnum.Opened
-                  ? 'Review proposals'
-                  : 'Validated proposal'}
+              <p className='font-bold mt-8 mb-4'>
+                {
+                  showRanking ?
+                    "Ranking"
+                    :
+                  service.status === ServiceStatusEnum.Opened
+                    ? 'Review proposals'
+                    : 'Validated proposal'
+                }
                 :
               </p>
               <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
