@@ -6,7 +6,7 @@ import usePaymentsByService from '../hooks/usePaymentsByService';
 import useProposalsByService from '../hooks/useProposalsByService';
 import useReviewsByService from '../hooks/useReviewsByService';
 import ContactButton from '../modules/Messaging/components/ContactButton';
-import { ISnapshotProposal, IService, ProposalStatusEnum, ServiceStatusEnum, ISnapshotProposalCreateRequest } from '../types';
+import { ISnapshotProposal, IService, ProposalStatusEnum, ServiceStatusEnum, ISnapshotProposalCreateRequest, ISnapshotCastVoteRequest, IVote } from '../types';
 import { renderTokenAmountFromConfig } from '../utils/conversion';
 import { formatDate } from '../utils/dates';
 import PaymentModal from './Modal/PaymentModal';
@@ -42,9 +42,20 @@ function ServiceDetail({ service }: { service: IService }) {
   });
 
   const [snapshotProposal, setSnapshotProposal] = useState<ISnapshotProposal | null>(null);
+  const [snapshotVotes, setSnapshotVotes] = useState<IVote[]>([]);
   const [proposalCreated, setProposalCreated] = useState<boolean>(false);
+  const [voteCasted, setVoteCasted] = useState<boolean>(false);
+
+  //
+  // SNAPSHOT VARS
+  //
+  const hub = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET;
+  const graphqlEndpoint = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET + "/graphql";
+  const client = new snapshot.Client712(hub);
+  const ethersProvider = new providers.JsonRpcProvider(process.env.NEXT_PUBLIC_GOERLI_RPC_URL)
   const snapshotSpace = "cagnazz.eth";
   const bountyTitle = service.description?.title;
+  const voteType = "approval";
   // ideally, this is true IFF bounty.deadline < now
   const isBountyExpired = true;
   // this should depend on the snapshot proposal (snapshotProposal.end)
@@ -92,8 +103,28 @@ function ServiceDetail({ service }: { service: IService }) {
     `
   }
 
+  const queryGetVotesByProposalId = (proposalId: string) => {
+    return `
+      {
+        votes (
+          first: 1000
+          where: {
+            proposal: "${proposalId}"
+          }
+        ) {
+          id
+          voter
+          created
+          choice
+          space {
+            id
+          }
+        }
+      }
+    `
+  }
+
   const getSnapshotProposal = async (query: string) => {
-    const graphqlEndpoint = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET + "/graphql";
     let data;
     try {
       const response = await axios.post(graphqlEndpoint, {
@@ -109,21 +140,36 @@ function ServiceDetail({ service }: { service: IService }) {
     return data as ISnapshotProposal;
   }
 
+  const getSnapshotVotes = async (query: string) => {
+    let data;
+    try {
+      const response = await axios.post(graphqlEndpoint, {
+        query,
+      });
+      data = response.data.data.votes;
+    } catch (error) {
+      console.error('GraphQL Error:', error);
+    }
+    return data as IVote[];
+  }
+
   useEffect(() => {
     const getProposal = async () => {
       const proposal = await getSnapshotProposal(queryGetProposalByTitle(bountyTitle));
       setSnapshotProposal(proposal);
+      if (proposal) {
+        const votes = await getSnapshotVotes(queryGetVotesByProposalId(proposal.id));
+        setSnapshotVotes(votes);
+      } else {
+        setSnapshotVotes([]);
+      }
     }
     getProposal();
-  }, [bountyTitle, proposalCreated]);
+  }, [bountyTitle, proposalCreated, voteCasted]);
 
   const signer = useEthersSigner()
 
   const createSnapshotProposal = async () => {
-    const hub = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET;
-    const client = new snapshot.Client712(hub);
-    const ethersProvider = new providers.JsonRpcProvider(process.env.NEXT_PUBLIC_GOERLI_RPC_URL)
-
     const blockNumber = await ethersProvider.getBlockNumber()
     const startTimestamp = Math.floor(Date.now() / 1000);
     // ends in 5 minutes
@@ -131,7 +177,7 @@ function ServiceDetail({ service }: { service: IService }) {
 
     const proposalToCreate: ISnapshotProposalCreateRequest = {
       space: snapshotSpace,
-      type: 'approval',
+      type: voteType,
       title: bountyTitle || "",
       body: `To read more about this bounty, go to http://localhost:3000/dashboard/bounties/${service.id}`,
       discussion: '',
@@ -145,15 +191,76 @@ function ServiceDetail({ service }: { service: IService }) {
     try {
       //@ts-ignore
       await client.proposal(signer, account?.address || "", proposalToCreate);
+      setProposalCreated(true);
     } catch(error) {
       console.error("error on createSnapshotProposal", error);
     }
+  }
 
-    setProposalCreated(true);
+  const castSnapshotVote = async () => {
+    // we need an array for choices
+    let choices: number[] = [];
+    proposals.forEach((proposal, index) => {
+      if (checkedItems.includes(proposal.seller.handle)) {
+        choices.push(index+1);
+      }
+    })
+    const voteToCast: ISnapshotCastVoteRequest = {
+      space: snapshotSpace,
+      proposal: snapshotProposal?.id || "",
+      type: voteType,
+      choice: choices,
+    }
+    console.log(voteToCast)
+    try {
+      // @ts-ignore
+      await client.vote(signer, account?.address || "", voteToCast);
+      setVoteCasted(true);
+      setCheckedItems([]);
+    } catch(error) {
+      console.error("error on castSnapshotVote", error);
+    }
   }
 
   console.log(snapshotProposal)
-  
+  console.log(snapshotVotes)
+
+  const snapshotProposalStatus = 
+    proposals.length === 0 && "Waiting for proposals" ||
+    isBountyExpired && !snapshotProposal && "To start" ||
+    !isSnapshotExpired && snapshotProposal && "In progress" ||
+    snapshotProposal && isSnapshotExpired && "Finished"
+
+  const showRanking = snapshotProposalStatus !== "Waiting for proposals" && snapshotProposalStatus !== "To start"
+
+  const SnapshotProposalsRanking: Map<string, number> = new Map<string, number>();
+
+  if (snapshotProposal) {
+    snapshotProposal.scores.forEach((score, index) => {
+      SnapshotProposalsRanking.set(snapshotProposal.choices[index], score);
+    })
+  }
+
+  if (showRanking) {
+    proposals.sort((a, b) => {
+      const aScore = SnapshotProposalsRanking.get(a.seller.handle) || 0;
+      const bScore = SnapshotProposalsRanking.get(b.seller.handle) || 0;
+      return bScore - aScore;
+    })
+  }
+
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+
+  const handleCheckboxChange = (handle: string) => {
+    if (checkedItems.includes(handle)) {
+      setCheckedItems(checkedItems.filter((item) => item !== handle));
+    } else {
+      setCheckedItems([...checkedItems, handle]);
+    }
+  };
+
+  const userAlreadyVoted = snapshotVotes.find((vote) => vote.voter === account?.address);
+
   return (
     <>
       <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424]'>
@@ -284,22 +391,24 @@ function ServiceDetail({ service }: { service: IService }) {
                   Voting Status:
                 </div>
                 <span className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700'>
-                  {
-                    proposals.length === 0 && "Waiting for proposals" ||
-                    isBountyExpired && !snapshotProposal && "To start" ||
-                    !isSnapshotExpired && snapshotProposal && "In progress" ||
-                    isSnapshotExpired && snapshotProposal && "Finished"
-                  }
+                  {snapshotProposalStatus}
                 </span>
               </div>
               {
                 proposals.length > 0 && isBountyExpired && !snapshotProposal && (
                   <button className='text-md text-gray-400 bg-zinc-600 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm'
-                    onClick={() => {
-                      createSnapshotProposal();
-                    }}
+                    onClick={() => createSnapshotProposal()}
                   >
                     Create Snapshot Proposal
+                  </button>
+                )
+              }
+              {
+                snapshotProposalStatus === "In progress" && checkedItems.length > 0 && (
+                  <button className='text-md text-gray-400 bg-zinc-600 hover:bg-zinc-500 hover:text-white px-3 py-2 rounded text-sm'
+                    onClick={() => castSnapshotVote()}
+                  >
+                    Vote
                   </button>
                 )
               }
@@ -323,11 +432,24 @@ function ServiceDetail({ service }: { service: IService }) {
                   <ProposalItem proposal={validatedProposal} />
                 ) : (
                   proposals.map((proposal, i) => {
+                    if (showRanking) {
+                      if (snapshotProposalStatus === "In progress") {
+                        proposal.status = ProposalStatusEnum.VoteOngoing;
+                      } else {
+                        proposal.status = ProposalStatusEnum.Ranking;
+                      }
+                    }
                     return (
                       <div key={i}>
                         {(service.status === ServiceStatusEnum.Opened ||
                           proposal.status === ProposalStatusEnum.Validated) && (
-                          <ProposalItem proposal={proposal} />
+                          <ProposalItem
+                            proposal={proposal}
+                            index={i+1}
+                            isCheckable={proposal.status === ProposalStatusEnum.VoteOngoing && !userAlreadyVoted}
+                            checked={checkedItems.includes(proposal.seller.handle)}
+                            handleCheckboxChange={handleCheckboxChange}
+                          />
                         )}
                       </div>
                     );

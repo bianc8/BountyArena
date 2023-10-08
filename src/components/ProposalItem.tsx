@@ -9,7 +9,15 @@ import ValidateProposalModal from './Modal/ValidateProposalModal';
 import ShowProposalModal from './Modal/ShowProposalModal';
 import Image from 'next/image';
 
-function ProposalItem({ proposal }: { proposal: IProposal }) {
+function ProposalItem({ 
+  proposal, index, isCheckable, checked, handleCheckboxChange
+}:{ 
+  proposal: IProposal,
+  index?: number,
+  isCheckable?: boolean,
+  checked?: boolean,
+  handleCheckboxChange?: (handle: string) => void
+}) {
   const { user, account } = useContext(TalentLayerContext);
   const service = useServiceById(proposal.service.id);
 
@@ -44,7 +52,14 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
             </div>
 
             <span className='absolute right-[-25px] top-[-25px] inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-800'>
-              {proposal.status}
+              {
+                proposal.status === ProposalStatusEnum.Ranking || 
+                proposal.status === ProposalStatusEnum.VoteOngoing 
+                ? 
+                  index
+                :
+                  proposal.status
+              }
             </span>
           </div>
 
@@ -74,6 +89,11 @@ function ProposalItem({ proposal }: { proposal: IProposal }) {
           {account && isBuyer && proposal.status === ProposalStatusEnum.Validated && (
             <ValidateProposalModal proposal={proposal} account={account} />
           )}
+          {
+            handleCheckboxChange && isCheckable && (
+              <input type='checkbox' checked={checked} onChange={() => handleCheckboxChange(proposal.seller.handle)} />
+            )
+          }
         </div>
         {account &&
           !isBuyer &&

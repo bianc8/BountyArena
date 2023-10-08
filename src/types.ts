@@ -1,3 +1,4 @@
+import { ProposalType } from '@snapshot-labs/snapshot.js/dist/sign/types';
 import { Connector } from 'wagmi';
 
 export type IHive = {
@@ -214,9 +215,10 @@ export enum ServiceStatusEnum {
 
 export enum ProposalStatusEnum {
   Pending = 'Pending',
-  Selected = 'Selected',
   Validated = 'Validated',
   Rejected = 'Rejected',
+  Ranking = 'Ranking',
+  VoteOngoing = 'VoteOngoing',
 }
 
 export type IProposalDetails = {
@@ -336,4 +338,29 @@ export interface ISnapshotProposalCreateRequest {
   end: number;
   snapshot: number;
   plugins: string;
+}
+
+export interface ISnapshotCastVoteRequest {
+  from?: string;
+  space: string;
+  timestamp?: number;
+  proposal: string;
+  type: ProposalType;
+  choice: number | number[] | string | {
+    [key: string]: number;
+  };
+  privacy?: string;
+  reason?: string;
+  app?: string;
+  metadata?: string;
+}
+
+export interface IVote {
+  id: string;
+  voter: string;
+  created: number;
+  choice: number[];
+  space: {
+    id: string;
+  };
 }

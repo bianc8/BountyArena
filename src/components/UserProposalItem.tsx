@@ -72,7 +72,7 @@ function UserProposalItem({ proposal }: { proposal: IProposal }) {
               Learn More and Accept
             </Link>
           )}
-          {isBuyer && proposal.status === ProposalStatusEnum.Selected && (
+          {isBuyer && proposal.status === ProposalStatusEnum.Pending && (
             <button className='text-green-600 bg-green-50 hover:bg-[#FFAE00] hover:text-white px-5 py-2 rounded'>
               Validate
             </button>
