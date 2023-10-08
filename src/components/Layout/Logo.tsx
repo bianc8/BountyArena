@@ -5,7 +5,7 @@ function Logo({ theme = 'dark' }: { theme?: 'dark' | 'light' }) {
     <div className={`text-xl sm:text-2xl font-bold ${theme == 'light' ? 'text-white' : 'text-[#FFAE00]'}`}>
       <Link href='/' className='flex items-center'>
         <p className='-ml-2 sm:ml-0'>
-          Bounty Arena
+          BountyArena
         </p>
       </Link>
     </div>

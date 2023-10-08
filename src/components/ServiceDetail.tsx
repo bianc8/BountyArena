@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TalentLayerContext from '../context/talentLayer';
 import usePaymentsByService from '../hooks/usePaymentsByService';
 import useProposalsByService from '../hooks/useProposalsByService';
 import useReviewsByService from '../hooks/useReviewsByService';
 import ContactButton from '../modules/Messaging/components/ContactButton';
-import { IService, ProposalStatusEnum, ServiceStatusEnum } from '../types';
+import { ISnapshotProposal, IService, ProposalStatusEnum, ServiceStatusEnum, ISnapshotProposalCreateRequest, ISnapshotCastVoteRequest, IVote } from '../types';
 import { renderTokenAmountFromConfig } from '../utils/conversion';
 import { formatDate } from '../utils/dates';
 import PaymentModal from './Modal/PaymentModal';
@@ -16,6 +16,10 @@ import ReviewItem from './ReviewItem';
 import ServiceStatus from './ServiceStatus';
 import Stars from './Stars';
 import { useChainId } from '../hooks/useChainId';
+import axios from 'axios';
+import snapshot from '@snapshot-labs/snapshot.js';
+import { useEthersSigner } from '../utils/ethers';
+import { providers } from 'ethers'
 
 function ServiceDetail({ service }: { service: IService }) {
   const chainId = useChainId();
@@ -36,6 +40,224 @@ function ServiceDetail({ service }: { service: IService }) {
   const validatedProposal = proposals.find(proposal => {
     return proposal.status === ProposalStatusEnum.Validated;
   });
+  const signer = useEthersSigner()
+
+  const [snapshotProposal, setSnapshotProposal] = useState<ISnapshotProposal | null>(null);
+  const [snapshotVotes, setSnapshotVotes] = useState<IVote[]>([]);
+  const [proposalCreated, setProposalCreated] = useState<boolean>(false);
+  const [voteCasted, setVoteCasted] = useState<boolean>(false);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+
+  //
+  // SNAPSHOT VARS
+  //
+  const hub = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET;
+  const graphqlEndpoint = process.env.NEXT_PUBLIC_SNAPSHOT_HUB_URL_TESTNET + "/graphql";
+  const client = new snapshot.Client712(hub);
+  const ethersProvider = new providers.JsonRpcProvider(process.env.NEXT_PUBLIC_GOERLI_RPC_URL)
+  const snapshotSpace = "cagnazz.eth";
+  const bountyTitle = service.description?.title;
+  const voteType = "approval";
+  // ideally, this is true IFF bounty.deadline < now
+  const isBountyExpired = true;
+  // this should depend on the snapshot proposal (snapshotProposal.end)
+  const isSnapshotExpired = false;
+
+  const queryGetProposalByTitle =  (title: string | undefined) => {
+    return `
+      {
+        proposals(
+          skip: 0,
+          where: {
+            space_in: ["${snapshotSpace}"],
+            title_contains: "${title}",
+          },
+          orderBy: "created",
+          orderDirection: desc
+        ) {
+          id
+          title
+          body
+          choices
+          start
+          end
+          snapshot
+          state
+          author
+          created
+          scores
+          scores_by_strategy
+          scores_total
+          scores_updated
+          plugins
+          network
+          strategies {
+            name
+            network
+            params
+          }
+          space {
+            id
+            name
+          }
+        }
+      }
+    `
+  }
+
+  const queryGetVotesByProposalId = (proposalId: string) => {
+    return `
+      {
+        votes (
+          first: 1000
+          where: {
+            proposal: "${proposalId}"
+          }
+        ) {
+          id
+          voter
+          created
+          choice
+          space {
+            id
+          }
+        }
+      }
+    `
+  }
+
+  const getSnapshotProposal = async (query: string) => {
+    let data;
+    try {
+      const response = await axios.post(graphqlEndpoint, {
+        query,
+      });
+      let proposals = response.data.data.proposals;
+      if (proposals.length > 0) {
+        data = proposals[0];
+      }
+    } catch (error) {
+      console.error('GraphQL Error:', error);
+    }
+    return data as ISnapshotProposal;
+  }
+
+  const getSnapshotVotes = async (query: string) => {
+    let data;
+    try {
+      const response = await axios.post(graphqlEndpoint, {
+        query,
+      });
+      data = response.data.data.votes;
+    } catch (error) {
+      console.error('GraphQL Error:', error);
+    }
+    return data as IVote[];
+  }
+
+  const createSnapshotProposal = async () => {
+    const blockNumber = await ethersProvider.getBlockNumber()
+    const startTimestamp = Math.floor(Date.now() / 1000);
+    // ends in 5 minutes
+    const endTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
+
+    const proposalToCreate: ISnapshotProposalCreateRequest = {
+      space: snapshotSpace,
+      type: voteType,
+      title: bountyTitle || "",
+      body: `To read more about this bounty, go to http://localhost:3000/dashboard/bounties/${service.id}`,
+      discussion: '',
+      choices: proposals.map((proposal) => proposal.seller.handle),
+      start: startTimestamp,
+      end: endTimestamp,
+      snapshot: blockNumber,
+      plugins: JSON.stringify({}),
+    }
+
+    try {
+      //@ts-ignore
+      await client.proposal(signer, account?.address || "", proposalToCreate);
+      setProposalCreated(true);
+    } catch(error) {
+      console.error("error on createSnapshotProposal", error);
+    }
+  }
+
+  const castSnapshotVote = async () => {
+    // we need an array for choices
+    let choices: number[] = [];
+    proposals.forEach((proposal, index) => {
+      if (checkedItems.includes(proposal.seller.handle)) {
+        choices.push(index+1);
+      }
+    })
+    const voteToCast: ISnapshotCastVoteRequest = {
+      space: snapshotSpace,
+      proposal: snapshotProposal?.id || "",
+      type: voteType,
+      choice: choices,
+    }
+    console.log(voteToCast)
+    try {
+      // @ts-ignore
+      await client.vote(signer, account?.address || "", voteToCast);
+      setVoteCasted(true);
+      setCheckedItems([]);
+    } catch(error) {
+      console.error("error on castSnapshotVote", error);
+    }
+  }
+
+  console.log(snapshotProposal)
+  console.log(snapshotVotes)
+
+  const snapshotProposalStatus = 
+    proposals.length === 0 && "Waiting for proposals" ||
+    isBountyExpired && !snapshotProposal && "To start" ||
+    !isSnapshotExpired && snapshotProposal && "In progress" ||
+    snapshotProposal && isSnapshotExpired && "Finished"
+
+  const showRanking = snapshotProposalStatus !== "Waiting for proposals" && snapshotProposalStatus !== "To start"
+
+  const SnapshotProposalsRanking: Map<string, number> = new Map<string, number>();
+
+  if (snapshotProposal) {
+    snapshotProposal.scores.forEach((score, index) => {
+      SnapshotProposalsRanking.set(snapshotProposal.choices[index], score);
+    })
+  }
+
+  if (showRanking) {
+    proposals.sort((a, b) => {
+      const aScore = SnapshotProposalsRanking.get(a.seller.handle) || 0;
+      const bScore = SnapshotProposalsRanking.get(b.seller.handle) || 0;
+      return bScore - aScore;
+    })
+  }
+
+  const handleCheckboxChange = (handle: string) => {
+    if (checkedItems.includes(handle)) {
+      setCheckedItems(checkedItems.filter((item) => item !== handle));
+    } else {
+      setCheckedItems([...checkedItems, handle]);
+    }
+  };
+
+  const userAlreadyVoted = snapshotVotes.find((vote) => vote.voter === account?.address);
+
+  useEffect(() => {
+    const getProposal = async () => {
+      const proposal = await getSnapshotProposal(queryGetProposalByTitle(bountyTitle));
+      setSnapshotProposal(proposal);
+      if (proposal) {
+        const votes = await getSnapshotVotes(queryGetVotesByProposalId(proposal.id));
+        setSnapshotVotes(votes);
+      } else {
+        setSnapshotVotes([]);
+      }
+    }
+    getProposal();
+  }, [bountyTitle, proposalCreated, voteCasted]);
 
   return (
     <>
@@ -158,14 +380,54 @@ function ServiceDetail({ service }: { service: IService }) {
         </div>
       )}
 
+      {
+        isBuyer && (
+          <div className='flex flex-row gap-2 rounded-xl p-4 border border-gray-700 text-white bg-[#262424] mt-7'>
+            <div className='flex flex-row items-top gap-4 w-full justify-between'>
+              <div className='flex flex-row gap-2 items-center'>
+                <div className='flex items-center justify-start relative'>
+                  Voting Status:
+                </div>
+                <span className='inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-700'>
+                  {snapshotProposalStatus}
+                </span>
+              </div>
+              {
+                proposals.length > 0 && isBountyExpired && !snapshotProposal && (
+                  <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
+                    onClick={() => createSnapshotProposal()}
+                  >
+                    Create Snapshot Proposal
+                  </button>
+                )
+              }
+              {
+                snapshotProposalStatus === "In progress" && checkedItems.length > 0 && (
+                  <button className='text-md text-black bg-[#ffae00] hover:bg-[#ff5500] hover:text-white px-3 py-2 rounded text-sm ease-in-out duration-150'
+                    onClick={() => castSnapshotVote()}
+                  >
+                    Vote
+                  </button>
+                )
+              }
+            </div>
+          </div>
+        )
+      }
+
       {isBuyer && (
         <>
           {proposals.length > 0 ? (
             <>
-              <p className='text-gray-900 font-bold mt-12 mb-4'>
-                {service.status === ServiceStatusEnum.Opened
-                  ? 'Review proposals'
-                  : 'Validated proposal'}
+              <p className='font-bold mt-8 mb-4'>
+                {
+                  showRanking ?
+                    "Ranking"
+                    :
+                  service.status === ServiceStatusEnum.Opened
+                    ? 'Review proposals'
+                    : 'Validated proposal'
+                }
                 :
               </p>
               <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
@@ -173,11 +435,24 @@ function ServiceDetail({ service }: { service: IService }) {
                   <ProposalItem proposal={validatedProposal} />
                 ) : (
                   proposals.map((proposal, i) => {
+                    if (showRanking) {
+                      if (snapshotProposalStatus === "In progress") {
+                        proposal.status = ProposalStatusEnum.VoteOngoing;
+                      } else {
+                        proposal.status = ProposalStatusEnum.Ranking;
+                      }
+                    }
                     return (
                       <div key={i}>
                         {(service.status === ServiceStatusEnum.Opened ||
                           proposal.status === ProposalStatusEnum.Validated) && (
-                          <ProposalItem proposal={proposal} />
+                          <ProposalItem
+                            proposal={proposal}
+                            index={i+1}
+                            isCheckable={proposal.status === ProposalStatusEnum.VoteOngoing && !userAlreadyVoted}
+                            checked={checkedItems.includes(proposal.seller.handle)}
+                            handleCheckboxChange={handleCheckboxChange}
+                          />
                         )}
                       </div>
                     );
