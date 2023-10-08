@@ -45,6 +45,36 @@ export const getReviewsByAddress = (chainId: number, address: string): Promise<a
         to {
           id
           handle
+          address
+        }
+        description {
+          id
+          content
+        }
+      }
+    }
+    `;
+  console.log(query);
+  return processRequest(chainId, query);
+};
+
+export const getReviews = (chainId: number, platformId: number): Promise<any> => {
+  const query = `
+    {
+      reviews(where: {service_: {platform: "${platformId}"}}, orderBy: id, orderDirection: desc) {
+        id
+        rating
+        createdAt
+        service {
+          id
+          status
+          buyer {
+            handle
+          }
+        }
+        to {
+          id
+          handle
         }
         description {
           id

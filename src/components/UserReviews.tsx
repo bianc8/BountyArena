@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useReviewsByAddress from '../hooks/useReviewsByAddress';
 import useServices from '../hooks/useServices';
 import { IUser } from '../types';
@@ -6,9 +7,10 @@ import UserServiceItem from './UserServiceItem';
 
 interface IProps {
   user: IUser;
+  vcs?: boolean;
 }
 
-function UserReviews({ user }: IProps) {
+function UserReviews({ user, vcs = false }: IProps) {
   const { reviews } = useReviewsByAddress(user?.address as string);
 
   if (reviews.length === 0) {
@@ -21,9 +23,11 @@ function UserReviews({ user }: IProps) {
         User Reviews
       </h2>
       <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
-        {reviews.map((review, i) => {
-          return <ReviewItem review={review} key={i} />;
-        })}
+        {
+          reviews.map((review, i) => {
+            return <ReviewItem review={review} vcs={vcs} key={i} />;
+          })
+        }
       </div>
 
       {reviews.length === 20 && (

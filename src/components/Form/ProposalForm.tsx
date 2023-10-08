@@ -83,12 +83,12 @@ function ApplicationForm({
     );
   }
 
-  console.log("existingExpirationDate", existingExpirationDate)
-  console.log("existingRateTokenAmount", existingRateTokenAmount)
+  // console.log("existingExpirationDate", existingExpirationDate)
+  // console.log("existingRateTokenAmount", existingRateTokenAmount)
 
   const initialValues: IFormValues = {
     about: existingProposal?.description?.about || '',
-    rateToken: /*existingProposal?.rateToken.address ||*/ allowedTokenList[1].address,
+    rateToken: existingProposal?.rateToken.address || service.description?.rateToken as string,
     rateAmount: 
       (existingProposal?.rateAmount ? +existingProposal.rateAmount : 0) || 
       (service.description?.rateAmount ? +service.description?.rateAmount : 0 ),

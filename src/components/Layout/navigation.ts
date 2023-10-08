@@ -13,6 +13,7 @@ export const navigation = [
   { name: 'Chat', href: '/dashboard/messaging', icon: ChatBubbleBottomCenterIcon, current: false },
   { name: 'Bounties', href: '/dashboard/bounties', icon: BriefcaseIcon, current: false },
   { name: 'Hackers', href: '/dashboard/talents', icon: UserGroupIcon, current: false },
+  { name: 'Validator', href: '/dashboard/validator', icon: UserGroupIcon, current: false },
 ];
 
 export const navigationAdmin = [

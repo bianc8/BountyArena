@@ -11,14 +11,14 @@ function EditProfile() {
     return null
   }
 
-  return (
+  return (<>
     <Layout>
       <ProfileForm />
       <div className='my-6'>
-        <UserReviews user={currentUser} />
+        <UserReviews user={currentUser} vcs={true} />
       </div>
     </Layout>
-  );
+  </>);
 }
 
 export default EditProfile;
