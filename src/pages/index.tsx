@@ -268,8 +268,8 @@ function Home() {
           <div className='absolute -top-28 left-0 -z-10 hidden md:block'>
             <svg
               width='632'
-              height='1179'
-              viewBox='0 0 632 1179'
+              height='800'
+              viewBox='0 0 632 800'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'>
               <g opacity='0.25' filter='url(#filter0_f_38_24)'>
