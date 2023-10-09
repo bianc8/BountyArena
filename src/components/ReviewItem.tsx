@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { IReview } from '../types';
 import { formatDate } from '../utils/dates';
 import { useState } from 'react';
-import useCreateVC from '../hooks/useCreateVC';
 
 function ReviewItem({
   review,
@@ -13,14 +12,22 @@ function ReviewItem({
 }) {
   const [show, setShow] = useState(false);
   const [vc, setVC] = useState("");
-  // const { jwt } = useCreateVC(review, review.to.address);
 
-  console.log('review', review)
-
-  const handleGetVC = () => {
-    useCreateVC(review, review.to.address).then((jwt) => {
-      setVC(jwt);
-    });
+  const handleGetVC = async () => {
+    const res = await fetch('/api/vc/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }, 
+      mode: 'cors',
+      body: JSON.stringify({
+        review: review,
+        address: review.to.address
+      })
+    })
+    
+    const data = await res.json()
+    setVC(data.jwt);
   }
 
   if (!review) {

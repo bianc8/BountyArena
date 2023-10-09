@@ -65,7 +65,8 @@ function Home() {
                     </a>
 
                     <a
-                      href='https://www.youtube.com/watch?v='
+                      href='https://youtu.be/f4t4c1PrbF8'
+                      target='_blank'
                       className='glightbox mb-6 inline-flex items-center py-4 text-black hover:text-primary '>
                       <span className='mr-[12px] flex h-[56px] w-[56px] items-center justify-center rounded-full border-2 border-current'>
                         <svg
