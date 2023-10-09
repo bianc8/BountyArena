@@ -1,12 +1,13 @@
 # BountyArena <> ETHRome
 
-![BountyArena homepage](https://github.com/enricBiancott0/SNAKE/blob/main/public/images/bountyarena/screenshot.png?raw=true))
-
 We are Web3 fanatics and developers, so why do we keep using a centralized platform to submit our project?
 
 BountyArena is a platform to manage bounties (but everything similar like grants, requests for help or others can work). An entity (user or company) can publish a bounty and devs can apply and try to win the prize.
 
 The bounty owner or the judges will launch a Snapshot proposal where the selected people (so in this case the judges) have to elect the best submission.
+
+## Youtube Demo
+[![BountyArena Video Demo](https://github.com/bianc8/BountyArena/blob/main/public/images/bountyarena/screenshot.png?raw=true)](https://youtu.be/f4t4c1PrbF8)
 
 ## Want to try it on your own?
 1. Clone the repo:
