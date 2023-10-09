@@ -1,6 +1,6 @@
 # BountyArena <> ETHRome
 
-![BountyArena homepage](https://github.com/enricBiancott0/SNAKE/blob/main/public/images/bountyarena/screenshot.png?raw=true))
+![BountyArena homepage](https://github.com/bianc8/BountyArena/blob/main/public/images/bountyarena/screenshot.png?raw=true)
 
 We are Web3 fanatics and developers, so why do we keep using a centralized platform to submit our project?
 
